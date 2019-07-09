@@ -1,0 +1,35 @@
+﻿
+@using CS.Common.Untils
+@using CS.Data.DataContext
+@using CS.Data.Model
+@{
+    var model = (List<ListDetailProduct>)Model;
+}
+<table id="table-detail-@ViewBag.id" style="padding-left: 50px; max-width: 750px;" class="table table-bordered table-hover childtable">
+    <tr>
+        <td>Code</td>
+        <td>Tên</td>
+        <td>Số lượng</td>
+        <td>Tùy chọn</td>
+    </tr>
+    @foreach (var item in model)
+    {
+        <tr id="detail-@(item.id)">
+            <td>@(item.code)</td>
+            <td>@(item.product_name)</td>
+            <td>@(item.quantity)</td>
+            <td>@Html.Raw(item.isactive == true ? "<span style='color:green;'>Đang sử dụng</span>" : "<span style='color:red;'>Khóa</span>")</td>
+            <td><a class="btn btn-block btn-primary" onclick="BindButtonEditDetailClick(this)" data-code="@(item.code)"><i class="fa fa-edit" style="margin-right: 5px;"></i>Sửa</a></td>
+        </tr>
+    }
+    @if (model.Count == 0)
+    {
+        @*        <tr>*@
+        @*            <td colspan="8" style="color: red;">Không có dữ liệu !</td>*@
+        @*        </tr>*@
+    }
+</table>
+<div style="width: 100%; float: left;">
+    <a class="btn btn-block btn-success" onclick="BindButtonAddDetailClick(this)" data-id="@ViewBag.id" style="max-width: 200px;"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm</a>
+</div>
+

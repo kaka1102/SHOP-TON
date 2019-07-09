@@ -1,0 +1,134 @@
+﻿
+
+@{
+    ViewBag.Title = "Thêm mới menu vào tài khoản";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+
+
+<style>
+    .button-checkbox {
+        height: 20px;
+        width: 20px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Thông tin</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tên menu<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        @(Html.Action("Themmoimenuchotaikhoan", "RoleUser", new { id = "cbx-role", idMember = ViewBag.id, idrole = ViewBag.idrole }))
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Trạng thái sử dụng<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8" id="active-menu">
+                                        <ul class="todo-list ui-sortable">
+                                            <li class="">
+                                                <input type="checkbox" id="IsRead" checked="checked" value="" class="button-checkbox">
+                                                <span class="text">IsRead</span>
+                                            </li>
+                                            <li class="">
+                                                <input type="checkbox" id="IsCreate" value="" class="button-checkbox">
+                                                <span class="text">IsCreate</span>
+                                            </li>
+                                            <li class="">
+                                                <input type="checkbox" id="IsUpdate" value="" class="button-checkbox">
+                                                <span class="text">IsUpdate</span>
+                                            </li>
+                                            <li class="">
+                                                <input type="checkbox" id="IsDelete" value="" class="button-checkbox">
+                                                <span class="text">IsDelete</span>
+                                            </li>
+                                            <li class="">
+                                                <input type="checkbox" id="IsExport" value="" class="button-checkbox">
+                                                <span class="text">IsExport</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-2 col-xs-offset-5">
+                                    <button id="btn-add-new-item-chil" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        BindButtonSubmitClick();
+        CheckButtonIsRead();
+    });
+
+    function CheckButtonIsRead() {
+        $('.button-checkbox').change(function() {
+            if ($(this).is(':checked') == true) {
+                $('#IsRead').prop('checked', true);
+           }
+        });
+    }
+
+    function BindButtonSubmitClick() {
+        $("#btn-add-new-item-chil").click(function () {
+            var idAccount = @ViewBag.id;
+            var idRole = @ViewBag.idrole;
+            var idMenu = $("#lst-menu-by-id").find('option:selected').val();
+            var IsRead = $('#IsRead').is(':checked');
+            var IsCreate = $('#IsCreate').is(':checked');
+            var IsUpdate = $('#IsUpdate').is(':checked');
+            var IsDelete = $('#IsDelete').is(':checked');
+            var IsExport = $('#IsExport').is(':checked');
+
+            var data = {
+                idAccount: idAccount,
+                idRole: idRole,
+                idMenu: idMenu,
+                IsRead: IsRead,
+                IsCreate: IsCreate,
+                IsUpdate: IsUpdate,
+                IsDelete: IsDelete,
+                IsExport: IsExport
+            }
+            CallAjax("GET", '@Url.Action("_AddMenuIntoAccount")', data, EditCallBack);
+        });
+    }
+
+
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+           window.parent.location.reload();
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+    }
+
+</script>
+
+

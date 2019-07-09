@@ -1,0 +1,275 @@
+﻿@using System.Collections
+@using CS.Common.Untils
+@using CS.Data.DataContext
+
+@{
+    var TTKH = (service_customer)ViewBag.TTKH;
+
+    var TTBill = (service_customer_bill)ViewBag.TTBill;
+
+    var ChiTietSP = (List<service_customer_bill_detail>)ViewBag.ChiTietSP;
+    var TTDaiLy = (Branch)ViewBag.TTDaiLy;
+}
+
+<style>
+    .header-TTMB {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 22px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    .header-report {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 17px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    .header-report-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 17px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    .text-infor {
+        font-size: 17px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    .header-chil {
+        font-weight: bold;
+        font-size: 17px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    .content-bold {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 17px;
+        text-align: left;
+        width: 30%;
+    }
+
+    .content-bold-pre {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 17px;
+        text-align: right;
+        width: 40%;
+    }
+
+    .content-header {
+        font-weight: bold;
+        font-size: 13px;
+        font-family: Times New Roman !important;
+    }
+
+    table td {
+        padding: 5px;
+    }
+
+    .form-content {
+        padding-left: 17px;
+    }
+
+    .p-content {
+        padding: 5px 15px 0 15px;
+        margin-bottom: 0;
+    }
+
+    .table-kh tr td {
+        width: 50% !important
+    }
+
+    .btn-checkbox {
+        float: right;
+        width: 20px;
+        height: 20px;
+        margin: 0px !important;
+    }
+
+    .btn-checkbox-span {
+        width: 20px;
+        height: 20px;
+        margin: 0px !important;
+    }
+
+    .text-table {
+        font-weight: bold;
+        font-size: 17px;
+        font-family: serif;
+        margin: 0px !important;
+    }
+
+    @@media all, print {
+        .abc tr {
+            border-bottom: 1px solid #000000 !important;
+        }
+    }
+</style>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @if (TTBill == null)
+            {
+                <p style="width: 100%; color: red; text-align: center;">Không có dữ liệu</p>
+            }
+            else
+            {
+                <div class="box box-danger">
+                    <div class="box-body">
+                        <div class="row" id="print-form" style="    line-height: 20px;">
+
+                            <div class="col-xs-12">
+                                <p class="header-report-title" style="text-align: center;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
+                                <p class="header-chil" style="text-align: center;">Độc lập - Tự do - Hạnh phúc</p>
+                                <p class="header-chil" style="text-align: center;">------------------***------------------</p>
+
+                                <p class="header-TTMB" style="text-align: center; font-size: 22px;padding-top: 15px;">THỎA THUẬN MUA HÀNG HÓA</p>
+                                <p style="width: 100%;    padding-top: 6px; text-align: center; margin: 0px !important"><span style="font-weight: bold;">Số :</span><span style="margin-left: 5px">@(TTBill.code)</span><span style="font-weight: bold;margin-left: 10px">/@(DateTime.Now.Year)/TTDV</span></p>
+
+                                <div style="width: 100%">
+                                    <div style="margin-left: 8%">
+
+                                        <p style="padding-top: 4px; font-style: italic; width: 100%; text-align: center; margin: 0px !important">............................., Ngày @(TTBill.date_sale.Value.Day) tháng @(TTBill.date_sale.Value.Month) năm @(TTBill.date_sale.Value.Year)</p>
+                                    </div>
+                                </div>
+                                <p class="header-report">1.&nbsp;&nbsp;Khách hàng : @(TTKH.fullname) </p>
+                                <div>
+                                    <div style="width: 55%;float: left">
+                                        <p class="text-infor">Số CMND/Số thẻ căn cước công dân : @(string.IsNullOrEmpty(TTKH.id_card) ? "................................................................................................................" : TTKH.id_card)</p>
+                                    </div>
+                                    <div style="width: 45%;float: right">
+                                        <p class="text-infor">Ngày cấp : @(string.IsNullOrEmpty(TTKH.id_card_date.ToString()) ? "....../......./.........." : TTKH.id_card_date.Value.ToString("dd/MM/yyyy"))</p>
+                                    </div>
+                                </div>
+
+                                <p class="text-infor"> Nơi cấp : @(string.IsNullOrEmpty(TTKH.id_card_place) ? "...................................................................................................................................................." : TTKH.id_card_place)</p>
+                                <p class="text-infor">Địa chỉ : @(string.IsNullOrEmpty(TTKH.address) ? ".........................................................................................................................................................." : TTKH.address)</p>
+                                <div>
+                                    <div style="width: 55%;float: left">
+                                        <p class="text-infor">Số điện thoại : @(string.IsNullOrEmpty(TTKH.mobile) ? "...................................................................." : TTKH.mobile)</p>
+                                    </div>
+                                    <div style="width: 45%;float: right">
+                                        <p class="text-infor"> Email :..........................................</p>
+                                    </div>
+                                </div>
+
+                                <p class="header-report">2.&nbsp;&nbsp;Bên bán : @(TTDaiLy.Name) </p>
+                                <p class="text-infor">Địa chỉ : @(string.IsNullOrEmpty(TTDaiLy.AddressName) ? "........................................................................................" : TTDaiLy.AddressName)</p>
+                                <div>
+                                    <div style="width: 55%;float: left">
+                                        <p class="text-infor">Mã số doanh nghiệp : @(string.IsNullOrEmpty(TTDaiLy.Tax_Number) ? ".........................................." : TTDaiLy.Tax_Number)</p>
+                                    </div>
+                                    <div style="width: 45%;float: right">
+                                        <p class="text-infor">Số điện thoại : @(string.IsNullOrEmpty(TTDaiLy.Phone) ? "...................................." : TTDaiLy.Phone)</p>
+                                    </div>
+                                </div>
+                                <p class="text-infor">Người đại diện :.........................................................................................................................................</p>
+                                <label class="header-chil">Cùng thỏa thuận nội dung dịch vụ như sau : </label><br />
+                                <label class="header-chil">1. Dịch vụ</label>
+                                <div class="form-content">
+                                    <div style="border: 1px solid #000000; width: 100%;float: left">
+                                        <table style="width: 100%;" class="abc">
+                                            <tr style="border-top: none; border-left: none;border-bottom:1px solid #000000;border-right: none ">
+                                                <td style="width: 40%; font-weight: bold;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">Tên sản phẩm</td>
+                                                <td style="width: 20%; font-weight: bold;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">Đơn vị</td>
+                                                <td style="width: 20%; font-weight: bold;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">Đơn giá</td>
+                                                <td style="width: 20%; font-weight: bold;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: none;">Số lượng</td>
+                                            </tr>
+                                            @foreach (var item in ChiTietSP)
+                                            {
+                                                <tr style="border-top: none; border-left: none;border-bottom:1px solid #000000;border-right: none ">
+                                                    <td style="font-style: italic;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">@(item.product_name)</td>
+                                                    <td style="text-align: right;font-style: italic;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">@(item.unit_name)</td>
+                                                    <td style="text-align: right;font-style: italic;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;"> @(DisplayUntil.DisplayMoney(item.price))</td>
+                                                    <td style="text-align: right;font-style: italic;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: none">@(item.quantity)</td>
+                                                </tr>
+                                            }
+
+
+                                            <tr style="font-weight: bold;border-top: none; border-left: none;border-bottom:1px solid #000000;border-right: none ">
+                                                <td style="border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">Tổng tiền :</td>
+                                                <td colspan="4" style="text-align: right;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: none;">@(DisplayUntil.DisplayMoney(TTBill.tongtien))</td>
+                                            </tr>
+                                            <tr style="font-weight: bold;border-top: none; border-left: none;border-bottom:1px solid #000000;border-right: none ">
+                                                <td style="border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: 1px solid #000000;">Giảm giá :</td>
+                                                <td colspan="4" style="text-align: right;border-top: none; border-left: none;border-bottom: 1px solid #000000; border-right: none;">@(DisplayUntil.DisplayMoney(TTBill.giamgia))</td>
+                                            </tr>
+                                            <tr style="font-weight: bold;border-top: none; border-left: none;border-bottom:1px solid #000000;border-right: none ">
+                                                <td style="border-top: none; border-left: none;border-bottom: none; border-right: 1px solid #000000;">Tổng tiền phải thanh toán :</td>
+                                                <td colspan="4" style="text-align: right;border-top: none; border-left: none;border-bottom: none; border-right:none;">@(DisplayUntil.DisplayMoney(TTBill.thucnhan))</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-content">
+                                    <p style="font-style: italic !important;margin: 0px !important">
+                                        <span style="font-weight: bold; font-style: italic">
+                                            <a style="text-decoration: underline; color: black;">Lưu ý:</a>
+                                        </span>
+                                        Đơn giá Gói dịch vụ chỉ được áp dụng trong trường hợp Khách hàng mua và sử dụng đủ số lần chăm sóc của Gói dịch vụ.
+                                        Các trường hợp ngoại lệ áp dụng theo Đơn giá bán lẻ.
+                                    </p>
+                                </div>
+                                <br />
+                                <label class="header-chil">2. Hình thức thanh toán :</label>
+                                <div class="form-content">
+                                    <p style="margin-bottom: 0;">@(DisplayUntil.DisplayMethodPay(TTBill.method))</p>
+                                </div>
+
+                                <label class="header-chil">3. <a style="text-decoration: underline; color: black;">Cam kết chung</a></label>
+                                <div class="form-content">
+                                    <p style="font-style: italic !important; margin: 0px !important">- Khách hàng đã được cung cấp đầy đủ thông tin liên quan, đơn giá Gói dịch vụ, đơn giá bán lẻ của Gói dịch vụ trước khi quyết định mua và hoàn toàn tự nguyện ký vào Thỏa thuận này.</p>
+                                    <p style="font-style: italic !important; margin: 0px !important">- Hợp đồng vay (tín dụng) giữa Khách hàng và tổ chức tín dụng là giao dịch độc lập với Thỏa thuận mua dịch vụ này giữa Khách hàng và Công ty. </p>
+                                    <p style="font-style: italic !important; margin: 0px !important">- Khách hàng xác nhận đã nhận được 01 Thẻ chăm sóc da từ Bên bán. Thời gian chăm sóc từng lần do nhân viên Bên Bán hướng dẫn. Từng lần chăm sóc, Khách hàng trình Thẻ chăm sóc da để Bên bán theo dõi đánh dấu xác nhận số lần Khách hàng đã sử dụng dịch vụ.</p>
+                                    <p style="font-style: italic !important; margin: 0px !important">- Khách hàng sử dụng sản phẩm, dịch vụ tuân thủ đúng, đủ theo hướng dẫn chăm sóc của Bên bán để đạt hiệu quả cao nhất.</p>
+                                    <p style="margin: 0px !important">- Mọi phản ánh về dịch vụ, Khách hàng vui lòng liên hệ theo số <span style="font-weight: bold;"> Hotline: 1800588871.</span></p>
+                                </div>
+                                <table style="width: 100%; text-align: center;">
+                                    <tr class="content-bold">
+                                        <td class="content-bold">
+                                            <p>NGƯỜI BÁN(CS)</p>
+                                        </td>
+                                        <td class="content-bold">
+                                            <p>KHO</p>
+                                        </td>
+                                        <td class="content-bold-pre">
+                                            <p>KHÁCH HÀNG</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content-bold">@(TTBill.tennguoixuat)</td>
+                                        <td class="content-bold"></td>
+                                        <td class="content-bold-pre">@(TTKH.fullname)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</section>

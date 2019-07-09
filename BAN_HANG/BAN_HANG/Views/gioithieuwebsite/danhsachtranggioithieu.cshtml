@@ -1,0 +1,127 @@
+﻿
+
+@using CS.Common.Const
+
+<div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-12" id="content-container">
+                <table id="tbl-content" class="table table-bordered table-hover" style="width: 100% !important">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên trang</th>
+                            <th>Người tạo</th>
+                            <th>Ngày tạo</th>
+                            <th style="width: 15%">Tùy chọn</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        LoadAllBranch();
+    });
+
+    function LoadAllBranch() {
+
+        var tblContent = $('#tbl-content').dataTable({
+            ajax: {
+                url: "/gioithieuwebsite/_danhsachtranggioithieu",
+                type: 'POST'
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'id',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tentrang',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tennguoitao',
+                    class: 'text-center'
+                },
+                {
+                    data: 'ngaytao',
+                    class: 'text-center'
+                },
+                {
+                    data: 'id',
+                    mRender: function (data) {
+                        return '<a target="_blank" href="/gioithieuwebsite/EditPage?id='+data+'" class="btn btn-primary dim  icon-index hint--top" aria-label="Chỉnh sửa thông tin" type="button"> <i class="fa fa-edit"></i> </a>';
+                    },
+
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+        //tblContent.on('click',
+        //    '.btn-primary', function () {
+        //        var closestRow = $(this).closest('tr');
+        //        var data = tblContent.api().row(closestRow).data();
+        //        window.location = "/gioithieuwebsite/EditPage?id=" + data.id;
+        //    });
+    }
+
+    function ChangeStatusRoomCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    $('#tbl-content').dataTable().api().ajax.url('/Branch/_LoadListBranch').load();
+                }
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+

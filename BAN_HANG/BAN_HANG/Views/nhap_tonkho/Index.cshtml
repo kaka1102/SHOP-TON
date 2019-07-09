@@ -1,0 +1,101 @@
+﻿@using CS.Common.Const
+
+@{
+    ViewBag.Title = " - Nhập-Tồn kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <ul class="sortable-list connectList agile-list ui-sortable" id="todo">
+                        <li class="warning-element ui-sortable-handle" id="task1">
+                            <div class="agile-detail">
+                                <div class="btn-group">
+                                    <a id="btn-add"href="/nhap_tonkho/NhapKho" target="_blank" class="btn btn-success " style="margin: 0px !important" type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Nhập kho</span></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="content-container">
+                            @Html.Action("ListProduct")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+    });
+    
+
+    function LoadListParent() {
+        LoadPartialView('@Url.Action("ListProduct")', $("#content-container"));
+    }
+
+       function BindButtonCongSL(param) {
+            BootstrapDialog.confirm({
+                title: 'CHÚ Ý',
+                message: '@SystemMessageConst.systemmessage.congSL',
+                type: BootstrapDialog.TYPE_WARNING,
+                closable: true,
+                draggable: true,
+                btnCancelLabel: 'CANCEL',
+                btnOKLabel: 'OK',
+                btnOKClass: 'btn-warning',
+                callback: function(result) {
+                    if (result) {
+                        var dataJson = {
+                            id: param.getAttribute("data-id")
+                        }
+                        CallAjax("GET", '@Url.Action("_CongSL_SP")', dataJson, DeleteCallBack);
+                    }
+                }
+            });
+        }
+        function BindButtonTruSL(param) {
+            BootstrapDialog.confirm({
+                title: 'CHÚ Ý',
+                message: '@SystemMessageConst.systemmessage.trusl',
+                type: BootstrapDialog.TYPE_WARNING,
+                closable: true,
+                draggable: true,
+                btnCancelLabel: 'CANCEL',
+                btnOKLabel: 'OK',
+                btnOKClass: 'btn-warning',
+                callback: function(result) {
+                    if (result) {
+                        var dataJson = {
+                            id: param.getAttribute("data-id")
+                        }
+                        CallAjax("GET", '@Url.Action("_Tru_SL_SP")', dataJson, DeleteCallBack);
+                    }
+                }
+            });
+        }
+        function DeleteCallBack(data) {
+            BootstrapDialog.alert(
+                {
+                    title: 'THÔNG BÁO',
+                    type: BootstrapDialog.TYPE_SUCCESS,
+                    message: data.result.Message,
+                    callback: function () {
+                        window.parent.LoadListParent();
+                    }
+                }
+            );
+        }
+</script>
+

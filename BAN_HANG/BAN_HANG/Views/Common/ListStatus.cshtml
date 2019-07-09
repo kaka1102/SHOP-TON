@@ -1,0 +1,4 @@
+﻿<select id="@ViewBag.id" class="form-control">
+    <option value="true" @(ViewBag.idSelected == true ? "selected='selected'" : "")>Đang sử dụng</option>
+    <option value="false" @(ViewBag.idSelected == false ? "selected='selected'" : "")>Khóa</option>
+</select>

@@ -1,0 +1,104 @@
+﻿@using CS.Data.DataContext
+
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+    var data = (tbl_gioithieu)Model;
+}
+<script src="~/Scripts/Ultils.js"></script>
+<div class="contact">
+    <h2 class=" contact-in">LIÊN HỆ</h2>
+
+    <div class="col-md-6 contact-top">
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.507867424771!2d105.83383691486868!3d21.012355586007203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135aba07483febf%3A0xefc15c8f642b6a3b!2zc-G7kSAxIHRow6FpIGjDoCwgxJHhu5FuZyDEkWEsIGjDoCBu4buZaQ!5e0!3m2!1sen!2s!4v1550126955320" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
+
+        @if (data != null)
+        {
+            @Html.Raw(data.noidung)
+        }
+        else
+        {
+            <h3>Không có thông tin</h3>
+        }
+    </div>
+    <div class="col-md-6 contact-top">
+        <h3>Gửi thông tin cho chúng tôi</h3>
+        <div>
+            <span>Họ tên <span style="color: red">*</span></span>
+            <input type="text" value="" id="txt-hoten">
+        </div>
+        <div>
+            <span>Địa chỉ</span>
+            <input type="text" value="" id="txt-diachi">
+        </div>
+        <div>
+            <span>Email</span>
+            <input type="text" value="" id="txt-mail">
+        </div>
+        <div>
+            <span>Điện thoại <span style="color: red">*</span></span>
+            <input type="text" value="" id="txt-sdt">
+        </div>
+        <div>
+            <span>Tiêu đề</span>
+            <input type="text" value="" id="txt-tieude">
+        </div>
+        <div>
+            <span>Nội dung <span style="color: red">*</span></span>
+            <textarea id="txt-noidung"> </textarea>
+        </div>
+        <div class="col-xs-12">
+            <p id="message-result" style="text-align: center;"> </p>
+        </div>
+        <button id="btn-submit" type="button" class="btn btn-success" style="margin-left: 3px;"><i class="fa fa-save" style="margin-right: 5px;"></i>Gửi thông tin</button>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+
+<script>
+    $(function() {
+        BindButtonSubmitClick();
+    });
+
+    function BindButtonSubmitClick() {
+        $("#btn-submit").click(function() {
+
+            var hoten = $("#txt-hoten").val();
+            var diachi = $("#txt-diachi").val();
+            var email = $("#txt-mail").val();
+            var sdt = $("#txt-sdt").val();
+            var tieude = $("#txt-tieude").val();
+            var noidung = $("#txt-noidung").val();
+
+            var data = {
+                hoten: hoten,
+                diachi: diachi,
+                email: email,
+                sdt: sdt,
+                tieude: tieude,
+                noidung: noidung
+
+            }
+            CallAjax("GET", '@Url.Action("_AddNewContact")', data, EditCallBack);
+        });
+    }
+
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+
+            $("#txt-hoten").val('');
+            $("#txt-diachi").val('');
+            $("#txt-mail").val('');
+            $("#txt-sdt").val('');
+            $("#txt-tieude").val('');
+            $("#txt-noidung").val('');
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+    }
+</script>

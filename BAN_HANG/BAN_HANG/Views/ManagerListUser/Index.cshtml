@@ -1,0 +1,105 @@
+﻿@using CS.Common.Const
+
+@{
+    ViewBag.Title = " - Danh sách nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @*<div class="ibox-content m-b-sm border-bottom">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Đại lý</label>
+                            <div class="col-sm-8">
+                                @Html.Action("LoadBrandByRoleLogin", "Common", new { id = "cbx-center", idSelected = -1, isDisable = false })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button id="btn-add-user" class="btn btn-success " type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="parent-content-container">
+                                @Html.Action("LoadListUser")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            
+            
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Đại lý</label>
+                                <div class="col-sm-8">
+                                    @Html.Action("LoadBrandByRoleLogin", "Common", new { id = "cbx-center", idSelected = -1, isDisable = false })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <button id="btn-add-user" class="btn btn-success pull-right" type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Danh sách tài khoản
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="parent-content-container">
+                            @Html.Action("LoadListUser")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        BindButtonAddClick();
+    });
+    function BindButtonAddClick() {
+        $("#btn-add-user").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "1100px",
+                innerHeight: "900px",
+                href: "@Url.Action("AddUser")?centerid=" + $("#cbx-center").find('option:selected').val()
+            });
+        });
+    }
+
+    function LoadListUser() {
+        var fd = new FormData();
+        fd.append("draw", 0);
+        fd.append("length", 30);
+        fd.append("start", 20);
+        fd.append("search[value]", "");
+        LoadPartialView('@Url.Action("LoadListUser")', $("#parent-content-container"));
+    }
+</script>
+

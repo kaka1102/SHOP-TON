@@ -1,0 +1,244 @@
+﻿@using CS.Common.Const
+
+<table id="tbl-content12" class="table table-bordered table-hover" style="width: 100% !important">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tên menu</th>
+            <th>IsCreate</th>
+            <th>IsRead</th>
+            <th>IsUpdate</th>
+            <th>IsDelete</th>
+            <th>IsExport</th>
+            <th>Tùy chọn</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadAllMenuByIdUser();
+
+    });
+
+    function LoadAllMenuByIdUser() {
+        var tblContent = $('#tbl-content12').dataTable({
+            ajax: {
+                url: "/RoleUser/_ListMenuOfRoleAndAccount?iduser=" + @ViewBag.iduser+"&idrole="+@ViewBag.idrole,
+                type: 'POST'
+
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'IdPer',
+                    class: 'text-center'
+                },
+                {
+                    data: 'MenuName',
+                    class: 'text-center'
+                },
+                {
+                    data: 'Create',
+                    mRender: function (data) {
+                        var disabled = "";
+                        if (data.status===false) {
+                             disabled = "disabled";
+                        }
+                        if (data.IsCreate == "True") {
+                            data = '<input type="checkbox" ' + disabled+' class="icon-check-menu" id="create" checked="checked">';
+                        } else {
+                            data = '<input type="checkbox"  ' + disabled +' class="icon-check-menu" id="create">';
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Read',
+                    mRender: function (data) {
+                        var disabled = "";
+                        if (data.status === false) {
+                            disabled = "disabled";
+                        }
+                        if (data.IsRead == "True") {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="read" checked="checked">';
+                        } else {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="read">';
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Update',
+                    mRender: function (data) {
+                        var disabled = "";
+                        if (data.status === false) {
+                            disabled = "disabled";
+                        }
+                        if (data.IsUpdate == "True") {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="update" checked="checked">';
+                        } else {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="update">';
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Delete',
+                    mRender: function (data) {
+                        var disabled = "";
+                        if (data.status === false) {
+                            disabled = "disabled";
+                        }
+                        if (data.IsDelete == "True") {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="delete" checked="checked">';
+                        } else {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="delete">';
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Export',
+                    mRender: function (data) {
+                        var disabled = "";
+                        if (data.status === false) {
+                            disabled = "disabled";
+                        }
+                        if (data.IsExport == "True") {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="export" checked="checked">';
+                        } else {
+                            data = '<input type="checkbox" ' + disabled +' class="icon-check-menu" id="export">';
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Option',
+                    mRender: function (data) {
+                        if (data.status == false) {
+                            //return '<button type="button" title="Delete" style="display:none" class="fa  fa-trash-o icon-index">';
+                            return '';
+                        } else {
+                            //return '<button type="button" title="Delete"  class="fa  fa-trash-o icon-index">';
+                            return ' <button class="btn btn-danger  dim  icon-index" title="Xóa" type="button"><i class="fa fa-trash-o"></i></button>';
+                           
+                        }
+
+                    },
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+        tblContent.on('click',
+            '.btn-danger',
+            function() {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function (result) {
+                        if (result) {
+                            var dataJson = {
+                                id: data.IdPer
+                            }
+                            CallAjax("GET", '@Url.Action("DeleteMenuInRoleAccount")', dataJson, DeleteCallBack);
+                        }
+                    }
+                });
+            });
+        tblContent.on('click', 'input:checkbox', function() {
+            var closestRow = $(this).closest('tr');
+            var data = tblContent.api().row(closestRow).data();
+            var type = $(this).change().context.id;
+            var gt = $(this).change().is(':checked');
+            var dataJson = {
+                id: data.IdPer,
+                type: type,
+                gt: gt
+            }
+            CallAjax("GET", '@Url.Action("UpdateSelectInMenu")', dataJson, SelectCallBack);
+        });
+
+    }
+    function SelectCallBack(data) {
+        if (data.result.IsSuccess == false && data.result.Message ==="Không có quyền cập nhật thông tin") {
+            BootstrapDialog.alert(
+                {
+                    title: 'THÔNG BÁO',
+                    type: BootstrapDialog.TYPE_SUCCESS,
+                    message: data.result.Message,
+                    callback: function () {
+                        $('#tbl-content12').dataTable().api().ajax.url('/RoleUser/_ListMenuOfRoleAndAccount?iduser=' +
+                            @ViewBag.iduser +
+                            '&idrole=' +
+                            @ViewBag.idrole).load();
+                    }
+                }
+            );
+        }
+
+    }
+    function DeleteCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    $('#tbl-content12').dataTable().api().ajax.url('/RoleUser/_ListMenuOfRoleAndAccount?iduser=' +
+                        @ViewBag.iduser +
+                        '&idrole=' +
+                        @ViewBag.idrole).load();
+                }
+            }
+        );
+    }
+</script>
+
+
+

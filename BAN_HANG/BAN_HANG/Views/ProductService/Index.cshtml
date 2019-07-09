@@ -1,0 +1,113 @@
+﻿@using CS.Common.Const
+
+@{
+    ViewBag.Title = " - Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <ul class="sortable-list connectList agile-list ui-sortable" id="todo">
+                        <li class="warning-element ui-sortable-handle" id="task1">
+                            <div class="agile-detail">
+                                <div class="btn-group" style="float: right">
+                                    <select id="cbx-type" class="form-control">
+                                        <option value="@SystemMessageConst.Key.Product_Service">Bộ sản phẩm</option>
+                                        <option value="@SystemMessageConst.Key.Product_Sale">Sản phẩm lẻ</option>
+                                    </select>
+                                </div>
+                                <div class="btn-group">
+                                    <button id="btn-add" class="btn btn-success " style="margin: 0px !important" type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="content-container">
+                                @Html.Action("ListServices")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        BindButtonAddClick();
+        BindCbxTypeChange();
+    });
+
+    function BindCbxTypeChange(parameters) {
+        $("#cbx-type").change(function() {
+            LoadListService();
+        });
+    }
+    function BindButtonAddClick() {
+        $("#btn-add").click(function () {
+            var type = $("#cbx-type").find('option:selected').val();
+
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "50%",
+                innerHeight: "50%",
+                href: "@Url.Action("ThemmoiSP")"
+            });
+        });
+    }
+
+    function BindButtonEditClick(self) {
+        var type = $("#cbx-type").find('option:selected').val();
+
+        var id = $(self).attr("data-id");
+        $(self).colorbox({
+            iframe: true,
+            innerWidth: "900px",
+            innerHeight: "500px",
+            href: "@Url.Action("Chinhsua_TT_SP")?id=" + id
+
+        });
+
+    }
+
+    function LoadListService() {
+        var type = $("#cbx-type").find('option:selected').val();
+        if (type === "@Html.Raw(SystemMessageConst.Key.Product_Service)") {
+            LoadPartialView('@Url.Action("ListServices")', $("#content-container"));
+        } else {
+            LoadPartialView('@Url.Action("ListProductRetail")', $("#content-container"));
+        }
+
+    }
+    @*function BindButtonAddDetailClick(self) {
+        var idProduct = $(self).attr("data-id");
+        $(self).colorbox({
+            iframe: true,
+            innerWidth: "900px",
+            innerHeight: "600px",
+            href: "@Url.Action("AddProductDetail")?idProduct=" + idProduct
+        });
+    };
+    function BindButtonEditDetailClick(self) {
+        var code = $(self).attr("data-code");
+        $(self).colorbox({
+            iframe: true,
+            innerWidth: "900px",
+            innerHeight: "600px",
+            href: "@Url.Action("EditProductDetail")?code=" + code
+
+        });
+    }*@
+</script>

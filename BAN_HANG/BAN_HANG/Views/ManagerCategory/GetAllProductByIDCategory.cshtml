@@ -1,0 +1,109 @@
+﻿
+@using CS.Common.Const
+@using CS.Common.Untils
+@using CS.Data.DataContext
+@using CS.Data.Model
+@{
+    var lst_TSKT = (List<ReturnLstCategoryProduct>)Model;
+}
+
+<style>
+    .css-blue {
+        color: blue !important;
+        font-weight: bold;
+    }
+</style>
+
+
+<div style="width: 100%;float: left">
+
+    <div style="width: 50%; float: left">
+        <div style="width: 100%; float: left;">
+            <a class="btn btn-block btn-success" onclick="BindButtonAdd_ThongSo(this)" data-id="@ViewBag.id" style="max-width: 200px;"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm sản phẩm</a>
+        </div>
+        <table id="table-attr-product" style="padding-left: 50px; max-width: 90%;" class="table table-bordered table-hover childtable">
+            <tr>
+                <td>Tên SP</td>
+                <td>Code</td>
+                <td>Đơn vị</td>
+                <td>Mô tả</td>
+                <td>Tùy chọn</td>
+            </tr>
+
+            @foreach (var item in lst_TSKT)
+            {
+                <tr>
+                    <td>@(item.name)</td>
+                    <td>@(item.code)</td>
+                    <td class="css-blue">@(item.unit_name)</td>
+                    <td class="css-blue">@(item.des_product)</td>
+                    <td>
+                        <button onclick="BindButtonXoaThongSo(this)" data-id-detail-category="@(item.id_detail)" class="btn btn-danger  dim  icon-index hint--left" aria-label="Xóa khỏi nhóm" type="button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    </div>
+</div>
+
+
+<script>
+
+    // thong so
+    function BindButtonAdd_ThongSo(param) {
+
+        $(param).colorbox({
+            iframe: true,
+            innerWidth: "80%",
+            innerHeight: "70%",
+            href: "/ManagerCategory/ThemmoiSP?id=@ViewBag.id"
+        });
+    }
+    
+    function BindButtonXoaThongSo(param) {
+
+        BootstrapDialog.confirm({
+            title: 'CHÚ Ý',
+            message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            btnCancelLabel: 'CANCEL',
+            btnOKLabel: 'OK',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    var dataJson = {
+                        id: param.getAttribute("data-id-detail-category")
+                    }
+                    CallAjax("GET", '@Url.Action("_xoasanphamkhoinhom")', dataJson, DeleteCallBack);
+                }
+            }
+        });
+    }
+    function DeleteCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    window.parent.LoadListUser();
+                }
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+
+

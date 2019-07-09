@@ -1,0 +1,150 @@
+﻿@using CS.Common.Const
+<table id="tbl-content" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Tên nguồn</th>
+            <th>Địa chỉ</th>
+            <th>Điện thoại</th>
+            <th>Code</th>
+            <th>Mô tả</th>
+            <th>Đại lý</th>
+            <th style="width: 15%">Tùy chọn</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(document).ready(function() {
+        LoadAllCustomer();
+    });
+
+    function LoadAllCustomer() {
+
+        var tblContent = $('#tbl-content').dataTable({
+            ajax: {
+                url: "/quanlynguonnhap/_Listnguonnhap",
+                type: 'POST'
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'tennguon',
+                    class: 'text-center'
+                },
+                {
+                    data: 'diachi',
+                    class: 'text-center'
+                },
+                {
+                    data: 'sdt',
+                    class: 'text-center'
+                },
+                {
+                    data: 'code',
+                    class: 'text-center'
+                },
+                {
+                    data: 'description',
+                    class: 'text-center'
+                },
+                {
+                    data: 'centername',
+                    class: 'text-center'
+                },
+                {
+                    data: 'id',
+                    mRender: function(data) {
+                        return '<button class="btn btn-primary dim  icon-index hint--top" aria-label="Chỉnh sửa thông tin" type="button"> <i class="fa fa-edit"></i> </button>' +
+                               '<button class="btn btn-danger dim icon-index hint--top"   aria-label="Xóa nguồn nhập" type="button"><i class="fa fa-trash-o"></i></button>';
+                    },
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function(row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm khách hàng",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+
+        tblContent.on('click',
+            '.btn-primary', function () {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                $(this).colorbox({
+                    iframe: true,
+                    innerWidth: "1000px",
+                    innerHeight: "800px",
+                    href: "/quanlynguonnhap/EditNguonnhap?id=" + data.id
+                });
+
+            });
+        tblContent.on('click',
+            '.btn-danger',
+            function() {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                var id = data.id;
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function (result) {
+                        if (result) {
+                            var dataJson = {
+                                id: id
+                            }
+                            CallAjax("GET", '@Url.Action("DeleteNguonnhap")', dataJson, DeleteCallBack);
+                        }
+                    }
+                });
+            });
+    }
+
+    function DeleteCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function() {
+                    LoadPartialView('@Url.Action("Listnguonnhap")', $("#parent-content-container"));
+                }
+            }
+        );
+    }
+
+</script>
+

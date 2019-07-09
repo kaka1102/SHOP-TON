@@ -1,0 +1,23 @@
+﻿@using BAN_HANG.Areas.Client.Models
+@using CS.Common.Untils
+
+
+@{
+    var data = (List<LstNewProduct>)Model;
+}
+
+
+<h4>SẢN PHẨM MỚI</h4>
+<ul>
+    @if (data.Count > 0)
+    {
+        foreach (var item in data)
+        {
+            <li><a href="/Home/ChitietSP/@(item.id)"><i> </i>@(item.name)</a></li>
+        }
+    }
+    else
+    {
+        <li><a href="#"><i> </i>Không có dữ liệu</a></li>
+    }
+</ul>

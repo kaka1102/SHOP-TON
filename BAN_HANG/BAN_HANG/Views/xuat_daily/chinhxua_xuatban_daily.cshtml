@@ -1,0 +1,349 @@
+﻿@using CS.Common.Const
+@using CS.Common.Untils
+@using CS.Data.DataContext
+@using CS.Data.Model
+
+@{
+
+    var TTKH = (service_customer)ViewBag.TTKH;
+
+    var TTBill = (service_customer_bill)ViewBag.TTBill;
+
+    var ChiTietSP = (List<service_customer_bill_detail>)ViewBag.ChiTietSP;
+
+    ViewBag.Title = " - Chỉnh sửa đơn hàng xuất bán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i> Lựa chọn sản phẩm
+                </div>
+                <div class="panel-body">
+                    <div class="box-body form-horizontal">
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Sản phẩm</label>
+                                    <div class="col-sm-9">
+                                        @Html.Action("DS_SP_TheoDaiLy", "Common", new { id = "cbx-product", idSelected = -1, isDisable = false })
+                                    </div>
+                                </div>
+                                <div class="form-group hidden" id="product-price-container">
+                                    <label class="col-sm-3 control-label">Đơn giá</label>
+                                    <div class="col-sm-9" id="content-price">
+                                        @Html.Action("DS_Gia_SP_TheoID", "Common", new { id = "cbx-chose-price", idSelected = -1, isDisable = false, id_product = 0 })
+                                    </div>
+                                </div>
+                                <div class="form-group hidden" id="product-unit-container">
+                                    <label class="col-sm-3 control-label">Đơn vị</label>
+                                    <div class="col-sm-9">
+                                        <input id="txt-unit" type="text" class="form-control" placeholder="Đơn vị" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="form-group hidden" id="group-product">
+                                    <label class="col-sm-3 control-label">Nhóm sản phẩm</label>
+                                    <div class="col-sm-9" id="nhom-sp-tonkho">
+                                        <div class="input-group">
+                                            <input id="auto-product" type="text" class="form-control" placeholder="Chọn sản phẩm" spellcheck="false">
+                                            <span class="input-group-addon"><i class="fa fa-caret-down"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group hidden" id="product-quantity-container">
+                                    <label class="col-sm-3 control-label">Số lượng</label>
+                                    <div class="col-sm-9">
+                                        <input id="txt-quantity" type="number" class="form-control" value="1" placeholder="Số lượng sản phẩm" onkeyup="validate(event, this)" max="9" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 190 || event.keyCode == 110 || event.keyCode == 109 || event.keyCode == 107 || event.keyCode == 40) ? false : true">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="frm-message-error">
+                                    <label class="col-sm-12 control-label" id="lbl-eror-add" style="color: red; font-weight: bold;text-align: center"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer hidden" style="text-align: center;" id="product-button-container">
+                        <button id="btn-add-product" type="button" class="btn btn-success" onclick="BindButtonBuyClick(this)"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i> Sản phẩm đã chọn
+                </div>
+                <div class="panel-body">
+                    <div class="box-body form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="tbl-content-selected" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Code</th>
+                                            <th>Đơn giá</th>
+                                            <th>Đơn vị</th>
+                                            <th>Số lượng</th>
+                                            <th>Tùy chọn</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in ChiTietSP)
+                                    {
+                                        <tr>
+                                            <td>@(item.product_name)</td>
+                                            <td>@(item.groupcodeproduct)</td>
+                                            <td>@DisplayUntil.DisplayMoney(item.price)</td>
+                                            <td>@(item.unit_name)</td>
+                                            <td><input style="width: 50%;" readonly="readonly" data-price="@(item.price)" data-quantity="@(item.quantity)" class="form-control quantity-item call-totalprice" value="@(item.quantity)" /></td>
+                                            <td style="text-align: center">
+                                                <a data-idbill-detail="@(item.id)" data-price="@(item.price)" class="btn btn-danger key-btn" onclick="BindButtonRemoveProductOld(this)"><i class="fa fa-remove" style="margin-right: 5px;"></i>Xóa</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i> Thông tin khách hàng
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal box-body">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Tên khách hàng</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="txt-kh" class="form-control" value="@(TTKH.fullname)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Địa chỉ</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="txt-diachi" class="form-control" value="@(TTKH.address)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Điện thoại</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="txt-phone" class="form-control" value="@(TTKH.mobile)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i> Thông tin phiếu xuất
+                </div>
+                <div class="panel-body">
+                    <div class="box-body form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Số phiếu</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" disabled="disabled" id="txt-bill-number" value="@(TTBill.code)" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Ngày xuất</label>
+                                    <div class="col-sm-10">
+                                        <input id="txt-date-start" type="text" value="@( TTBill.date_sale.Value.ToString("dd/MM/yyyy")   )" readonly="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Người xuất</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-nguoixuat" class="form-control" value="@(TTBill.tennguoixuat)">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Ghi chú</label>
+                                    <div class="col-sm-10">
+                                        <textarea rows="5" style="width: 100% !important" id="txt-note-bill" placeholder="Mô tả đơn hàng" >@(TTBill.note)</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i>Thông tin thanh toán
+                </div>
+                <div class="panel-body">
+                    <div class="box-body form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Hình thức thanh toán</label>
+                                    <div class="col-sm-8">
+                                        @Html.Action("GetListParameterByKey", "Common", new { id = "cbx-bill-form", key = "STATUS_BILL_FORM", idSelected = TTBill.method })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tổng tiền</label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-total" type="text" class="form-control" value="@DisplayUntil.DisplayMoney(TTBill.tongtien)" disabled="disabled" style="color: blue !important" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Giảm giá</label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-bonus" type="text" max="0" class="form-control" value="@DisplayUntil.DisplayMoney(TTBill.giamgia)" onkeyup='validate_monney(event, this)' style="color: red !important; border: 1px solid red !important;" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Số tiền</label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-total-final" type="text" class="form-control" value="@DisplayUntil.DisplayMoney(TTBill.thucnhan)" disabled="disabled" style="color: green !important" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <p id="message-result" style="text-align: center;"> </p>
+                    </div>
+                    <div class="box-footer" style="text-align: center;">
+                        <button id="btn-submit" type="button" class="btn btn-success" style="margin-left: 3px;"><i class="fa fa-save" style="margin-right: 5px;"></i>Lưu thông tin</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        LoadNhomSP_TheoIDSP();
+        LoadPrice_ByID_Product();
+        LoadUnit_ByID_Product();
+        ChangeQuantity();
+        BindButtonBonusKeydown();
+        $("#txt-date-start").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "mm/dd/yy"
+        });
+        BindButtonSaveClick();
+    });
+
+
+    function BindButtonSaveClick() {
+         $("#btn-submit").click(function () {
+
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: 'Xác nhận lưu thông tin đơn hàng không ??',
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function(result) {
+                        if (result) {
+
+                            //hinh thuc
+                            var billType = $("#cbx-bill-form").find("option:checked").val();
+
+                            // tien thanh toan
+                            var bonusTotal = $("#txt-bonus").val();
+                            bonusTotal = bonusTotal.replace(new RegExp(',', 'g'), '');
+                            var total = $("#txt-total").val();
+                            total = total.replace(new RegExp(',', 'g'), '');
+                            var discount = $("#txt-total-final").val();
+                            discount = discount.replace(new RegExp(',', 'g'), '');
+
+                            // so phieu
+                            var billNumber = $('#txt-bill-number').val();
+                            var ngayxuat = $('#txt-date-start').val();
+                            var nguoixuat = $('#txt-nguoixuat').val();
+                            var notebill = $('#txt-note-bill').val();
+                            // tt kh
+                            var tenkh = $("#txt-kh").val();
+                            var diachi = $('#txt-diachi').val();
+                            var dienthoai = $('#txt-phone').val();
+
+                            var data = "";
+
+                            $(".bonusitem").each(function() {
+                                var dataId = $(this).attr("data-id");
+                                var quantity = $(this).attr("data-quantity");
+                                var price = $(this).attr("data-price");
+                                var group_code_product = $(this).attr("data-group-code-product");
+
+                                var id_unit = $(this).attr("data-id-unit");
+                                var unit_name = $(this).attr("data-unitname");
+
+                                data += dataId + "*" + quantity + "*" + price + "*" + group_code_product + "*" + id_unit + "*" + unit_name + ",";
+                            });
+                            var fd = new FormData();
+
+
+                            fd.append('id_bill', @ViewBag.id_bill );
+                            fd.append('billType', billType);
+
+                            fd.append('bonusTotal', ConvertMoneyStringToFloat(bonusTotal));
+                            fd.append('total', total);
+                            fd.append('discount', discount);
+
+                            fd.append('billNumber', billNumber);
+                            fd.append('ngayxuat', ngayxuat);
+                            fd.append('nguoixuat', nguoixuat);
+                            fd.append('notebill', notebill);
+
+                            fd.append('tenkh', tenkh);
+                            fd.append('diachi', diachi);
+                            fd.append('dienthoai', dienthoai);
+
+                            fd.append('data', data);
+
+                            CallAjax_FormData("@Url.Action("_chinhxua_xuatban_daily")", fd, UpdateCallBack);
+
+                        }
+                    }
+                });
+        });
+    }
+
+
+    function UpdateCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+
+        AppendToToastr("Thông báo", data.result.Message);
+
+        setInterval(function () { window.location.reload(); }, 3000);
+    }
+</script>

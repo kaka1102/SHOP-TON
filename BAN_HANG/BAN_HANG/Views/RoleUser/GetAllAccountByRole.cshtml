@@ -1,0 +1,162 @@
+﻿@using CS.Data.Model
+
+
+<style>
+    div.multiple_select_checkbox {
+        width: 100%;
+        height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 1px solid #CCCCCC;
+    }
+
+    .item-cb-account {
+        padding: 10px;
+    }
+
+    .item-check-box-account {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px !important;
+    }
+</style>
+
+@{
+    var model = (List<ListUserUsingRole>)Model;
+}
+
+
+<div class="multiple_select_checkbox" id="lst-account-by-id">
+    @if (model != null)
+    {
+
+        <textarea id="txt-find-acount" name='tags' placeholder='Tìm tên tài khoản...'></textarea>
+
+        <div id="select_all_system" class="item-cb-account"> <input class="item-check-box-account" type="checkbox" id="chek_all_system" name="slt_all_system" value="0" />Chọn tất cả tài khoản đã sử dụng quyền trong hệ thống</div>
+        <div id="select_all" class="item-cb-account"> <input class="item-check-box-account" type="checkbox" id="chek_all" name="slt_all" value="0" />Chọn tất cả tài khoản bên dưới</div>
+
+        foreach (var item in model)
+        {
+            <div id="@(item.UserId)" class="item-cb-account"><input class="item-check-box-account cb-item" type="checkbox" data-key="@(item.UserName)" name="slt_username" value="@(item.UserId)" />@(item.UserName)</div>
+        }
+    }
+
+
+</div>
+
+
+<script>
+
+    $(function() {
+
+        var input2 = document.getElementById("txt-find-acount"),
+            tagify2 = new Tagify(input2,
+                {
+                    duplicates: true,
+                    callbacks: {
+                        add: onAddTag,
+                        remove: onRemoveTag
+                    },
+                    whitelist: [
+                        @foreach (var item in model)
+                        {
+                            @Html.Raw('"' + item.UserName + '"'+',');
+                        }
+                    ]
+                });
+
+        tagify2.on('add',
+            function(e) {
+                var account = e.detail.value;
+
+                var findItem = document.querySelectorAll('[data-key]');
+                $.each(findItem,
+                    function(i, v) {
+
+                        if (account === v.getAttribute('data-key')) {
+                            v.checked = true;
+                        }
+                    });
+            });
+
+        function onRemoveTag(e) {
+            var account = e.detail.value;
+            var findItem = document.querySelectorAll('[data-key]');
+            $.each(findItem,
+                function(i, v) {
+
+                    if (account === v.getAttribute('data-key')) {
+                        v.checked = false;
+                    }
+                });
+        }
+
+        function onAddTag(e) {
+         //   console.log(e, e.detail);
+        }
+    });
+</script>
+
+
+<script>
+
+    $(function () {
+
+        $('#chek_all').change(function () {
+            var checkAll = $(this).is(":checked");
+
+            if (checkAll === true) {
+                for (var i = 0; i < document.getElementsByName("slt_username").length; i++) {
+                    document.getElementsByName("slt_username")[i].checked = true;
+                }
+
+
+            } else {
+                for (var i = 0; i < document.getElementsByName("slt_username").length; i++) {
+                    document.getElementsByName("slt_username")[i].checked = false;
+                }
+            }
+        });
+        $('.cb-item').change(function () {
+            $('#chek_all').prop('checked', false);
+        });
+
+        var lstCu = [];
+        var lstOpt = [];
+
+
+        $('#chek_all').change(function () {
+            var checkAll = $(this).is(":checked");
+            if (checkAll == true) {
+                lstOpt = [];
+                var lst = $('#menu-container').find('.chon');
+                var lstOption = $('#menu-container').find('.option-chon');
+
+                for (var i = 0; i < lstOption.length; i++) {
+                    lstOpt.push(lstOption[i].getAttribute('data-idmenu-option'));
+                }
+
+                for (var i = 0; i < lst.length; i++) {
+                    lstCu.push(lst[i].getAttribute('data-idmenu'));
+                    lst[i].removeAttribute("disabled");
+                }
+
+            } else {
+                var lst = $('#menu-container').find('.chon');
+
+                for (var i = 0; i < lst.length; i++) {
+                    for (var j = 0; j < lstCu.length; j++) {
+                        if (lst[i].getAttribute('data-idmenu') == lstCu[j]) {
+                            lst[i].checked = true;
+                            lst[i].disabled = true;
+                        }
+                    }
+                }
+            }
+
+        });
+    });
+
+
+</script>
+

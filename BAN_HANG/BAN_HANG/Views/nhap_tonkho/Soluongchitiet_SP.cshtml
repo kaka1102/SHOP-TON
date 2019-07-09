@@ -1,0 +1,130 @@
+﻿
+
+@using CS.Common.Const
+@using CS.Common.Untils
+@using CS.Data.DataContext
+@using CS.Data.Model
+@{
+    var lst_detail = (List<chitiettonkho>)Model;
+
+}
+
+<style>
+    .css-blue {
+        color: blue !important;
+        font-weight: bold;
+    }
+</style>
+
+
+
+
+
+<div style="width: 100%;float: left">
+
+    <div style="width: 50%; float: left">
+        <table id="table-attr-product" style="padding-left: 50px; max-width: 90%;" class="table table-bordered table-hover childtable">
+            <tr>
+                <td>Nơi nhập</td>
+                <td>Tên SP</td>
+                <td>Mã SP</td>
+                <td>Nhóm Code</td>
+                <td>Giá nhập/1 SP</td>
+                <td>SL còn </td>
+                <td>Tổng tiền nhập </td>
+                <td>Tùy chọn</td>
+            </tr>
+
+            @foreach (var item in lst_detail)
+            {
+                <tr>
+                    <td>@(item.tennguon)</td>
+                    <td>@(item.tensp)</td>
+                    <td>@(item.masp)</td>
+                    <td>@(item.group_code)</td>
+                    <td>@(DisplayUntil.DisplayMoney(item.giatrungbinh)) đ    </td>
+                    <td>@(item.soluong)</td>
+                    <td>@(DisplayUntil.DisplayMoney(item.soluong * item.giatrungbinh)) đ  </td>
+                    
+                    <td style="width: 100px">
+                        <button onclick="Bind_CongSL_Chil(this)" data-id_product="@(ViewBag.id)" data-group-code="@(item.group_code)" class="btn btn-success btn-circle hint--left" aria-label="Cộng số lượng" type="button">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button onclick="Bind_TruSL_Chil(this)" data-id_product="@(ViewBag.id)" data-group-code="@(item.group_code)" class="btn btn-danger btn-circle hint--right" aria-label="Trừ số lượng" type="button">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    </div>
+</div>
+
+
+<script>
+
+    function Bind_CongSL_Chil(param) {
+            BootstrapDialog.confirm({
+                title: 'CHÚ Ý',
+                message: '@SystemMessageConst.systemmessage.congSL',
+                type: BootstrapDialog.TYPE_WARNING,
+                closable: true,
+                draggable: true,
+                btnCancelLabel: 'CANCEL',
+                btnOKLabel: 'OK',
+                btnOKClass: 'btn-warning',
+                callback: function(result) {
+                    if (result) {
+                        var dataJson = {
+                            id_p: param.getAttribute("data-id_product"),
+                            groupcode: param.getAttribute("data-group-code")
+                        }
+                        CallAjax("GET", '@Url.Action("_CongSL_Chil_SP")', dataJson, Udate_ChilCallBack);
+                    }
+                }
+            });
+        }
+    function Bind_TruSL_Chil(param) {
+            BootstrapDialog.confirm({
+                title: 'CHÚ Ý',
+                message: '@SystemMessageConst.systemmessage.trusl',
+                type: BootstrapDialog.TYPE_WARNING,
+                closable: true,
+                draggable: true,
+                btnCancelLabel: 'CANCEL',
+                btnOKLabel: 'OK',
+                btnOKClass: 'btn-warning',
+                callback: function(result) {
+                    if (result) {
+                        var dataJson = {
+                            id_p: param.getAttribute("data-id_product"),
+                            groupcode: param.getAttribute("data-group-code")
+                        }
+                        CallAjax("GET", '@Url.Action("_Tru_SL_Chil_SP")', dataJson, Udate_ChilCallBack);
+                    }
+                }
+            });
+        }
+        function Udate_ChilCallBack(data) {
+            BootstrapDialog.alert(
+                {
+                    title: 'THÔNG BÁO',
+                    type: BootstrapDialog.TYPE_SUCCESS,
+                    message: data.result.Message,
+                    callback: function () {
+                        window.parent.LoadListParent();
+                    }
+                }
+            );
+        }
+</script>
+
+
+
+
+
+
+
+

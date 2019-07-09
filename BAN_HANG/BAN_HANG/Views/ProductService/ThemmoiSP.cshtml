@@ -1,0 +1,157 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Thêm mới sản phẩm";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+<style>
+    .button-checkbox {
+        height: 20px;
+        width: 20px;
+    }
+</style>
+<style>
+    .state-icon {
+        left: -5px;
+    }
+
+
+    .well .list-group {
+        margin-bottom: 0px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Thông tin cần thêm mới</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Tên sản phẩm<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <input id="txt-ten" type="text"  class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Mã sản phẩm<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <input id="txt-code" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Loại sản phẩm</label>
+                                    <div class="col-sm-10">
+                                        <select id="cbb-type-pro" class="form-control">
+                                            <option value="RETAIL">Sản phẩm lẻ</option>
+                                            <option value="SERVICE">Bộ sản phẩm</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Đơn vị</label>
+                                    <div class="col-sm-10">
+                                        @(Html.Action("DS_Unit", "Common", new {id = "cbx-unit", idSelected = 0}))
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Giới thiệu</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="txt-des" cols="5" style="width: 100%"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Trạng thái</label>
+                                    <div class="col-sm-10">
+                                        <label>
+                                            <input type="checkbox" id="status" style="height: 20px; width: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sử dụng
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-2 col-xs-offset-5">
+                                    <button id="btn-add-new-item" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Lưu lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+
+        ThemmoiThongso();
+    });
+
+
+    function ThemmoiThongso() {
+        $('#btn-add-new-item').click(function () {
+
+            var tensp = $('#txt-ten').val();
+            var codesp = $('#txt-code').val();
+            var loaisp = $("#cbb-type-pro").find('option:selected').val();
+            var unitsp = $("#cbx-unit").find('option:selected').val();
+            var gioithieusp = $('#txt-des').val();
+            var status = $('#status').is(":checked");
+
+
+            var data = {
+                tensp: tensp,
+                codesp: codesp,
+                loaisp: loaisp,
+                unitsp: unitsp,
+                gioithieusp: gioithieusp,
+                status: status
+            }
+             CallAjax("GET", '@Url.Action("_ThemmoiSP")', data, AddNewCallBack);
+        });
+    }
+
+    function AddNewCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+            window.parent.LoadListService();
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+        AppendToToastr("Chú ý", data.result.Message);
+    }
+</script>
+
+
+
+
+
+
+
+

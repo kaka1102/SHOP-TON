@@ -1,0 +1,56 @@
+﻿@using BAN_HANG.Areas.Client.Models
+@using CS.Common.Untils
+
+@{
+    ViewBag.Title = "CategoryProduct";
+    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+
+    var data = (ReturnDSLoaiSP)Model;
+}
+
+<div class="products">
+    @if (data != null)
+    {
+        <h2 class="products-in" style="text-transform: uppercase">@(data.category_name)</h2>
+        if (data.LstSP.Count > 0)
+        {
+            <div class=" top-products">
+                @foreach (var item in data.LstSP)
+                {
+                    <div class="col-md-3 md-col">
+                        <div class="col-md">
+                            <a href="/Home/ChitietSP/@(item.id)" class="compare-in">
+                                <img src="@(item.path_img)" alt="@(item.description_img)" class="img-responsive">
+                                <div class="compare">
+                                    <span>Add to Compare</span>
+                                    <span>Add to Whislist</span>
+                                </div>
+                            </a>
+                            <div class="top-content">
+                                <h5><a href="/Home/ChitietSP/@(item.id)">@(item.name)</a></h5>
+                                <div class="white">
+                                    <a href="/Home/ChitietSP/@(item.id)" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ĐẶT HÀNG</a>
+                                    <p class="dollar"><span class="in-dollar">$</span><span>@(DisplayUntil.DisplayMoney(item.gia_xuat))</span></p>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+            </div>
+        }
+        else
+        {
+            <div class=" top-products">
+                <h3>Không có sản phẩm</h3>
+                <div class="clearfix"></div>
+            </div>
+        }
+    }
+    else
+    {
+        <h3>Không có dữ liệu</h3>
+    }
+</div>
+

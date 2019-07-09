@@ -1,0 +1,25 @@
+﻿@using CS.Data.DataContext
+
+<select id="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+    <option value="0" disabled="" @(ViewBag.idSelected == 0 ? "selected='selected'" : "")>Chọn chi nhánh</option>
+    @if (Model != null)
+    {
+        var model = (List<Role>)Model;
+        if (ViewBag.idSelected == 0)
+        {
+            <option value="0" selected="selected" disabled="disabled">Chọn quyền tài khoản</option>
+        }
+        foreach (var item in model)
+        {
+            <option value="@(item.Id)" @(ViewBag.idSelected == item.Id ? "selected='selected'" : "") level="@(item.Level)">@(item.RoleName)</option>
+        }
+        if (ViewBag.hasAll)
+        {
+            <option value="-1" @(ViewBag.idSelected == -1 ? "selected='selected'" : "")>Tất cả</option>
+        }
+    }
+</select>
+
+
+
+

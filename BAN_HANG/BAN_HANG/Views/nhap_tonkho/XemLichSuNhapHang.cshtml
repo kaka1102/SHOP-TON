@@ -1,0 +1,184 @@
+﻿@using CS.Common.Const
+
+@{
+    ViewBag.Title = " - Lịch sử nhập hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @*<div class="ibox">
+                <div class="ibox-content">
+                    <ul class="sortable-list connectList agile-list ui-sortable" id="todo">
+                        <li class="warning-element ui-sortable-handle" id="task1">
+                            <div class="agile-detail">
+                                <div class="btn-group">
+                                    <button id="btn-add" class="btn btn-success " style="margin: 0px !important" type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="content-container">
+                            <table id="tbl-customer-information-checkin" class="table table-bordered table-hover" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th style="width: 50px;"></th>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th>Ngày nhập</th>
+                                    <th>SL</th>
+                                    <th>Người nhập</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Giá TB/SP</th>
+                                    <th>Nguồn gốc</th>
+                                    <th>Đại lý</th>
+                                </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadAllHistory();
+    });
+
+    function LoadAllHistory() {
+
+        var tblContent = $('#tbl-customer-information-checkin').dataTable({
+            ajax: {
+                url: "/nhap_tonkho/_XemLichSuNhapHang?id_product=" +
+                    @ViewBag.id_product,
+                    type: 'POST'
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            "scrollX": true,
+            columns: [
+                {
+                    data: 'id',
+                    mRender: function (data) {
+                        return "";
+                    },
+                    class: 'details-control'
+                },
+                {
+                    data: 'RowNum',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tensp',
+                    class: 'text-center'
+                },
+                {
+                    data: 'ngaynhap',
+                    class: 'text-center'
+                },
+                {
+                    data: 'soluong',
+                    class: 'text-center'
+                },
+                {
+                    data: 'nguoinhap',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tongtien',
+                    class: 'text-center'
+                },
+                {
+                    data: 'giatrungbinh',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tennguon',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tendaily',
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "pageLength": 10,
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+
+        var _table = $("#tbl-customer-information-checkin").DataTable();
+
+        tblContent.on('click','.details-control',
+            function () {
+                var tr = $(this).closest('tr');
+                var row = _table.row(tr);
+                var data = row.data();
+                $.ajax({
+                    url: "/nhap_tonkho/Xemchitiet_lichsu_sp",
+                    data: {
+                        id: data.id
+                    },
+                    type: "GET",
+                    dataType: "html",
+                    success: function(data) {
+                        if (row.child.isShown()) {
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            row.child(data).show();
+                            tr.addClass('shown');
+                        }
+                        return data;
+                    },
+                    beforeSend: function() {
+                    }
+                });
+            });
+    }
+</script>
+
+
+

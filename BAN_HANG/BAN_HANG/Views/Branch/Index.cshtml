@@ -1,0 +1,48 @@
+﻿
+
+
+
+@{
+    ViewBag.Title = " - Quản lý chi nhánh";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid box-primary">
+                <div class="box-body">
+                    <div class="margin">
+                        <div class="btn-group">
+                            <button id="btn-add-branch" class="btn btn-success " type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-primary" id="lst-branch-container">
+                @Html.Action("LoadListBranch")
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function() {
+        BindButtonAddClick();
+    });
+    function BindButtonAddClick() {
+        $("#btn-add-branch").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "1000px",
+                innerHeight: "600px",
+                href: "/Branch/AddNewBrandch"
+            });
+        });
+    }
+    function LoadListBranch() {
+        LoadPartialView('@Url.Action("LoadListBranch")', $("#lst-branch-container"));
+    }
+</script>

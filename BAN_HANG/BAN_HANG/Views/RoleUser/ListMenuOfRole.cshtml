@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = " - Danh sách menu được quản lý";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+      Danh sách menu được quản lý của tài khoản : <span style="color: red">@ViewBag.username </span>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid box-primary">
+
+                <div class="box-body">
+                    <div class="margin">
+                        <div class="btn-group">
+                            @*<a id="btn-add" class="btn btn-dropbox"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm mới menu</a>*@
+                            <button id="btn-add" class="btn btn-success "  type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới menu</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="content-container">
+                                @Html.Action("ListMenuOfRoleAndAccount", new { iduser = ViewBag.iduser, idrole = ViewBag.idrole })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function() {
+        BindButtonAddClick();
+    });
+    function BindButtonAddClick() {
+        $("#btn-add").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "50%",
+                innerHeight: "50%",
+                href: "/RoleUser/AddMenuIntoAccount?Id="+@ViewBag.iduser+"&idrole="+@ViewBag.idrole
+            });
+        });
+    }
+    function LoadListUser() {
+        LoadPartialView('@Url.Action("ListUserInSystem")', $("#content-container"));
+    }
+
+</script>

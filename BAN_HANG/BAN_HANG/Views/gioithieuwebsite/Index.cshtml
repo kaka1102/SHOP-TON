@@ -1,0 +1,28 @@
+﻿
+
+
+
+@{
+    ViewBag.Title = " - Quản lý trang";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary" id="lst-branch-container">
+                @Html.Action("danhsachtranggioithieu")
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    function LoadListBranch() {
+        LoadPartialView('@Url.Action("danhsachtranggioithieu")', $("#lst-branch-container"));
+    }
+</script>
+

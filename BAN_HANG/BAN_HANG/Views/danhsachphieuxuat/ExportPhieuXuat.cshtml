@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "In hóa đơn";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="print-content">
+                @Html.Action("_ExportPhieuXuat", new { id_bill = ViewBag.id_bill });
+            </div>
+            <div class="box-footer" style="text-align: center;">
+                <button id="btnPrint" onclick="printDiv()" type="button" class="btn btn-warning"><i class="fa fa-print" style="margin-right: 5px;"></i>In phiếu</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script>
+    function printDiv() {
+
+        var divToPrint = document.getElementById('print-content');
+
+        var newWin = window.open('', 'Print-Window');
+
+        newWin.document.open();
+
+        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+        newWin.document.close();
+
+        setTimeout(function () { newWin.close(); }, 10);
+
+    }
+</script>
+
+

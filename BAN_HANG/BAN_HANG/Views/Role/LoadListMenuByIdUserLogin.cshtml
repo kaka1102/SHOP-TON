@@ -1,0 +1,27 @@
+﻿@using CS.Data.Model
+
+
+
+@{
+    var model = (List<ListMenuByUserLoginViewModal>)Model;
+}
+
+<select id="lst-menu-by-id" class="form-control">
+    @if (model != null)
+    {
+        foreach (var item in model)
+        {
+            <option value="@(item.MenuId)">@(item.MenuText)</option>
+        }
+    }
+</select>
+<script>
+    $(function() {
+        $('#lst-menu-by-id').change(function() {
+            $('#IsRead').prop('checked', true);
+            $('#IsCreate').prop('checked', false);
+            $('#IsUpdate').prop('checked', false);
+            $('#IsDelete').prop('checked', false);
+        });
+    });
+</script>

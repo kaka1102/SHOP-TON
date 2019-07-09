@@ -1,0 +1,322 @@
+﻿
+@using CS.Common.Const
+@using CS.Common.Untils
+@using CS.Data.DataContext
+@using CS.Data.Model
+@{
+    var lst_TSKT = (List<ListDetailProduct>)ViewBag.lst_TSKT;
+
+    var lst_Price = (List<ListDetailProduct>)ViewBag.lst_Price;
+
+    var lst_IMG = (List<ListDetailProduct>)ViewBag.lst_IMG;
+}
+
+<style>
+    .css-blue {
+        color: blue !important;
+        font-weight: bold;
+    }
+</style>
+
+
+
+
+
+<div style="width: 100%;float: left">
+
+    <div style="width: 50%; float: left">
+        <div style="width: 100%; float: left;">
+            <a class="btn btn-block btn-success" onclick="BindButtonAdd_ThongSo(this)" data-id="@ViewBag.id" style="max-width: 200px;"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm thông số</a>
+        </div>
+        <table id="table-attr-product" style="padding-left: 50px; max-width: 90%;" class="table table-bordered table-hover childtable">
+            <tr>
+                <td>Thông số</td>
+                <td>Mô tả</td>
+                <td>Tùy chọn</td>
+            </tr>
+
+            @foreach (var item in lst_TSKT)
+            {
+                <tr>
+                    <td>@(item.attr_name)</td>
+                    <td class="css-blue">@(item.descripton_attr)</td>
+                    <td>
+                        <button onclick="BindButtonXoaThongSo(this)" data-id-config-attr="@(item.id_config_attr)" class="btn btn-danger  dim  icon-index hint--left" aria-label="Xóa thông số" type="button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                        <button onclick="BindButtonEditThongSo(this)" data-id_product="@(item.id)" data-id-attr="@(item.id_attr)" data-id-config-attr="@(item.id_config_attr)" class="btn btn-primary dim  icon-index hint--right" aria-label="Sửa thông số" type="button">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    </div>
+    <div style="width: 50%; float: right">
+        <div style="width: 90%; float: right;">
+            <a class="btn btn-block btn-success" onclick="BindButtonAdd_GiaSP(this)" data-id-product="@ViewBag.id" style="max-width: 200px;"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm giá</a>
+        </div>
+        <table id="table-price-product" style="padding-left: 50px; max-width: 90%; float: right" class="table table-bordered table-hover childtable">
+
+            @foreach (var item in lst_Price)
+            {
+            <tr>
+                <td style="color: black; font-weight: bold !important">Loại giá</td>
+                <td style="color: black; font-weight: bold !important">@(item.name_display)</td>
+                <td>
+                    <button onclick="BindButtonXoaGia(this)" data-id_product="@(item.id)" data-id-price="@(item.id_gia)" class="btn btn-danger  dim  icon-index hint--left" aria-label="Xóa giá" type="button">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <button onclick="BindButtonEditGia(this)" data-id_product="@(item.id)" data-id-price="@(item.id_gia)" class="btn btn-primary dim  icon-index hint--right" aria-label="Sửa giá" type="button">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>Giá nhập SP</td>
+                <td class="css-blue"> @(DisplayUntil.DisplayMoney(item.gia_nhap)) đ </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Giá xuất SP</td>
+                <td class="css-blue"> @(DisplayUntil.DisplayMoney(item.gia_xuat)) đ</td>
+                <td></td>
+            </tr>
+
+            }
+
+        </table>
+
+
+    </div>
+    <div style="width: 100%;float: left">
+        <div id="table-img-product" style="width: 100%; float: right" class="table table-bordered table-hover childtable">
+
+            @if (lst_IMG.Count > 1)
+            {
+                <div style="width: 50%; float: left; padding-top: 10px; padding-bottom: 5px">
+                    <div style="width: 30%; float: left; text-align: left;font-weight: bold;    padding-left: 30px;">Ảnh</div>
+                    <div style="width: 15%; float: left; text-align: center;font-weight: bold"> Tùy chọn </div>
+                    <div style="width: 50%; float: left; text-align: center;font-weight: bold">Mô tả</div>
+                </div>
+                <div style="width: 50%; float: left; padding-top: 10px; padding-bottom: 5px">
+                    <div style="width: 30%; float: left; text-align: left;font-weight: bold;    padding-left: 30px;">Ảnh</div>
+                    <div style="width: 15%; float: left; text-align: center;font-weight: bold">  Tùy chọn </div>
+                    <div style="width: 50%; float: left; text-align: center;font-weight: bold">Mô tả</div>
+                </div>
+            }
+            else if (lst_IMG.Count == 1)
+            {
+                <div style="width: 50%; float: left; padding-top: 10px; padding-bottom: 5px">
+                    <div style="width: 30%; float: left; text-align: left; font-weight: bold;    padding-left: 30px;">Ảnh</div>
+                    <div style="width: 15%; float: left; text-align: center;font-weight: bold">Tùy chọn </div>
+                    <div style="width: 50%; float: left; text-align: center;font-weight: bold">Mô tả</div>
+                </div>
+                <div style="width: 50%; float: left; padding-top: 10px; padding-bottom: 5px">
+                       .
+                </div>
+            }
+            else
+            {
+
+            }
+
+
+            @foreach (var item in lst_IMG)
+            {
+
+                <div style="width: 50%; float: left; padding-top: 10px; padding-bottom: 5px">
+                    <div style="width: 30%; float: left"><img style="width: 100px; height: 100px" class="img-responsive" src="@(item.path_img)" /></div>
+                    <div style="width: 15%; float: left">
+                        <button onclick="BindButtonXoaAnh(this)" data-id_product="@(item.id)" data-id-img="@(item.id_img)" class="btn btn-danger  dim  icon-index hint--left" aria-label="Xóa ảnh" type="button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                        <button onclick="BindButtonEditAnh(this)" data-id_product="@(item.id)" data-id-img="@(item.id_img)" class="btn btn-primary dim  icon-index hint--right" aria-label="Lưu thông tin" type="button">
+                            <i class="fa fa-save"></i>
+                        </button>
+                    </div>
+                    <div style="width: 50%; float: left"><textarea id="@Html.Raw("txt_des_"+item.id_img)" style="width: 100%" cols="10" rows="5">@(item.des_img)</textarea></div>
+                </div>
+            }
+            <div style="width: 100%; padding: 50px; float: left;">
+                <a class="btn btn-block btn-success" onclick="BindButtonAdd_AnhSP(this)" data-id="@ViewBag.id" style="max-width: 200px"><i class="fa fa-plus" style="margin-right: 5px;"></i>Thêm ảnh</a>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+<script>
+
+
+    function BindButtonEditAnh(param) {
+
+        BootstrapDialog.confirm({
+            title: 'CHÚ Ý',
+            message: '@SystemMessageConst.systemmessage.ConfirmAfterUpdate',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            btnCancelLabel: 'CANCEL',
+            btnOKLabel: 'OK',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    var dataJson = {
+                        id_img: param.getAttribute("data-id-img"),
+                        id_product: param.getAttribute("data-id_product"),
+                        txt_des: $('#txt_des_' + param.getAttribute("data-id-img")).val()
+                    }
+                    CallAjax("GET", '@Url.Action("_ChinhSua_Anh_TheoSP")', dataJson, DeleteCallBack);
+                }
+            }
+        });
+    }
+
+    function BindButtonXoaAnh(param) {
+
+        BootstrapDialog.confirm({
+            title: 'CHÚ Ý',
+            message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            btnCancelLabel: 'CANCEL',
+            btnOKLabel: 'OK',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    var dataJson = {
+                        id_img: param.getAttribute("data-id-img"),
+                        id_product: param.getAttribute("data-id_product")
+                    }
+                    CallAjax("GET", '@Url.Action("_XoaAnhTheoSP")', dataJson, DeleteCallBack);
+                }
+            }
+        });
+    }
+
+    function BindButtonAdd_AnhSP(param) {
+
+        window.location = "/ProductService/ThemMoi_Anh_SP?id=@ViewBag.id";
+    }
+
+    // Price
+    function BindButtonAdd_GiaSP(param) {
+
+        $(param).colorbox({
+            iframe: true,
+            innerWidth: "50%",
+            innerHeight: "50%",
+            href: "/ProductService/ThemMoi_Gia_SP?id=@ViewBag.id"
+        });
+    }
+    function BindButtonXoaGia(param) {
+
+        BootstrapDialog.confirm({
+            title: 'CHÚ Ý',
+            message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            btnCancelLabel: 'CANCEL',
+            btnOKLabel: 'OK',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    var dataJson = {
+                        id_price: param.getAttribute("data-id-price"),
+                        id_product: param.getAttribute("data-id_product")
+                    }
+                    CallAjax("GET", '@Url.Action("_XoaGiaTheoSP")', dataJson, DeleteCallBack);
+                }
+            }
+        });
+    }
+    function BindButtonEditGia(param) {
+
+        var id_price = param.getAttribute("data-id-price");
+        var id_product = param.getAttribute("data-id_product");
+
+        $(param).colorbox({
+            iframe: true,
+            innerWidth: "50%",
+            innerHeight: "50%",
+            href: "/ProductService/ChinhSua_Gia_SP?id_price=" + id_price + "&id_product=" + id_product
+        });
+    }
+
+    // thong so
+    function BindButtonAdd_ThongSo(param) {
+
+        $(param).colorbox({
+            iframe: true,
+            innerWidth: "50%",
+            innerHeight: "50%",
+            href: "/ProductService/ThemMoi_Thongso_kythuat?id=@ViewBag.id"
+        });
+    }
+
+    function BindButtonEditThongSo(param) {
+
+        var id_product = param.getAttribute("data-id_product");
+        var id_attr = param.getAttribute("data-id-attr");
+        var id_cf_attr = param.getAttribute("data-id-config-attr");
+
+        $(param).colorbox({
+            iframe: true,
+            innerWidth: "50%",
+            innerHeight: "50%",
+            href: "/ProductService/ChinhSua_Thongso_kythuat?id_p=" + id_product + "&id_cf_attr=" + id_cf_attr + "&id_attr=" + id_attr
+        });
+    }
+
+    function BindButtonXoaThongSo(param) {
+
+        BootstrapDialog.confirm({
+            title: 'CHÚ Ý',
+            message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            btnCancelLabel: 'CANCEL',
+            btnOKLabel: 'OK',
+            btnOKClass: 'btn-warning',
+            callback: function(result) {
+                if (result) {
+                    var dataJson = {
+                        id_config_attr: param.getAttribute("data-id-config-attr")
+                    }
+                    CallAjax("GET", '@Url.Action("_XoathongsoTheoSP")', dataJson, DeleteCallBack);
+                }
+            }
+        });
+    }
+    function DeleteCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    window.parent.LoadListService();
+                }
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+

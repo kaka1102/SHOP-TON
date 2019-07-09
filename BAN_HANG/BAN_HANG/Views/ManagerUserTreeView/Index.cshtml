@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = " - Danh sách nhân viên (Tree)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Đại lý<span style="color: red;"> *</span></label>
+                            <div class="col-sm-4">
+                                @Html.Action("GetAllCenter", "Common", new {id = "cbx-center", hasAll = false})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Danh sách tài khoản
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="content-container">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+     //   BindButtonAddClick();
+        LoadListUserTree();
+        BindCbxCenterChange();
+
+    });
+    function BindCbxCenterChange(parameters) {
+        $("#cbx-center").change(function() {
+            LoadListUserTree();
+        });
+    }
+    @*function BindButtonAddClick() {
+        $("#btn-add").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "58%",
+                innerHeight: "75%",
+                href: "@Url.Action("AddUser")"
+            });
+        });
+    }*@
+
+    function LoadListUserTree() {
+        LoadPartialView('@Url.Action("_ManagerUsersTreeView")?idcenter=' + $("#cbx-center").find('option:selected').val(), $("#content-container"));
+    }
+</script>

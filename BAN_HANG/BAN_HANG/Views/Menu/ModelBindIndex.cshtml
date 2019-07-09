@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CS.Data.DataContext.Menu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+        <small>Menu List </small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box box-solid box-primary">
+             
+                <div class="box-body table-responsive">
+
+                    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+                    <br /><br />
+                    <div class="widget-sec">
+                        <div class="streaming-table">
+                            <span id="found" class="label label-info"></span>
+
+                            <table id="tbPages" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th> @Html.DisplayNameFor(model => model.Id) </th>
+                                        <th> @Html.DisplayNameFor(model => model.MenuText) </th>
+                                        <th> @Html.DisplayNameFor(model => model.MenuURL) </th>
+                                        <th> @Html.DisplayNameFor(model => model.ParentId) </th>
+                                        <th> @Html.DisplayNameFor(model => model.SortOrder) </th>
+                                        <th> @Html.DisplayNameFor(model => model.IsDisplayWebsite) </th>
+
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td> @Html.DisplayFor(modelItem => item.Id) </td>
+                                            <td> @Html.DisplayFor(modelItem => item.MenuText) </td>
+                                            <td> @Html.DisplayFor(modelItem => item.MenuURL) </td>
+                                            <td> @Html.DisplayFor(modelItem => item.ParentId) </td>
+                                            <td> @Html.DisplayFor(modelItem => item.SortOrder) </td>
+                                            <td> @Html.DisplayFor(modelItem => item.IsDisplayWebsite) </td>
+
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

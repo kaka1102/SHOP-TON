@@ -1,0 +1,17 @@
+﻿@using CS.Data.DataContext
+<select id="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+    @if (Model != null)
+    {
+        var model = (List<sys_parameter>)Model;
+        foreach (var item in model)
+        {
+            <option value="@(item.value)" @(ViewBag.idSelected == item.value ? "selected='selected'" : "")>@(item.name_display)</option>
+        }
+        if (ViewBag.hasAll)
+        {
+            <option value="0" @(ViewBag.idSelected == "0" ? "selected='selected'" : "")>Tất cả</option>
+        }
+    }
+</select>
+
+

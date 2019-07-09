@@ -1,0 +1,17 @@
+﻿
+<select id="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+
+    @if (Model.Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            <option value="@(item.id_attr)" @(ViewBag.idSelected == item.id_attr ? "selected='selected'" : "")>@(item.attr_name)</option>
+        }
+    }
+    else
+    {
+        <option value="0">--Không có thông số--</option>
+    }
+</select>
+
+

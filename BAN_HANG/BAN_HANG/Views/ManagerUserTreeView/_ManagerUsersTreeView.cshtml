@@ -1,0 +1,182 @@
+﻿<style>
+    .jstree-user {
+        background-image: url("/Content/jstree/dist/themes/default/585e4bcdcb11b227491c3396.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 100% 100%;
+        padding-top: 5px;
+    }
+
+    .jstree-root {
+        background-image: url("/Content/jstree/dist/themes/default/70-512.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 100% 100%;
+        padding-top: 5px;
+    }
+</style>
+<section>
+    <div id="jstree-wrapper">
+
+    </div>
+</section>
+
+<script>
+        $(function () {
+            BuildUsersTree();
+        });
+        function BuildUsersTree() {
+            $('#jstree-wrapper').jstree({
+                'core': {
+                    'data' : {
+                        "url": "/ManagerUserTreeView/ManagerUsersTreeViewData?idcenter=" + $("#cbx-center").find('option:selected').val(),
+                        "dataType": "json"
+                    },
+                    'check_callback': function(o, n, p, i, m) {
+                        if (m && m.dnd && m.pos !== 'i') {
+                            return false;
+                        }
+                        if (o === "move_node" || o === "copy_node") {
+                            if (this.get_node(n).parent === this.get_node(p).id) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    },
+                    'themes': {
+                        'responsive': false,
+                        'variant': 'small',
+                        'stripes': true
+                    }
+                },
+                'sort': function(a, b) {
+                    return this.get_type(a) === this.get_type(b)
+                        ? (this.get_text(a) > this.get_text(b) ? 1 : -1)
+                        : (this.get_type(a) >= this.get_type(b) ? 1 : -1);
+                },
+                'contextmenu': {
+                    'items': function ($node) {
+                        var tree = $("#jstree-wrapper").jstree(true);
+                        var nodeSelected = $('#jstree-wrapper').jstree('get_selected', true);
+                        var nodeCurrent = nodeSelected[0].parent;
+                        if (nodeCurrent === "#") {
+                            return {
+                                "Create": {
+                                    "separator_before": false,
+                                    "separator_after": false,
+                                    "label": "Thêm mới tài khoản",
+                                    "action": function (obj) {
+                                        ShowPopup($, "@Url.Action("AddUser")?centerid=" + $("#cbx-center").find('option:selected').val() + "&loadTree=true", "900px", "90%");
+                                    }
+                                }
+                            }
+                        } else {
+                            return {
+                                "Create": {
+                                    "separator_before": false,
+                                    "separator_after": false,
+                                    "label": "Cập nhật tài khoản",
+                                    "action": function (obj) {
+                                        ShowPopup($, "@Url.Action("EditUser")?id=" + $node.id, "900px", "90%");
+                                    }
+                                }
+                            }
+                        }
+
+                        return tmp;
+                    }
+
+                },
+                'unique': {
+                    'duplicate': function(name, counter) {
+                        return name + ' ' + counter;
+                    }
+                },
+                "plugins" : [
+                    "contextmenu", "dnd", "search",
+                    "state", "types", "wholerow"
+                ]
+            }).on('create_node.jstree',
+                function(e, data) {
+                    $.get('?operation=create_node',
+                            { 'type': data.node.type, 'id': data.node.parent, 'text': data.node.text })
+                        .done(function(d) {
+                            AddTree(data.node.text, data.node.parent, data);
+                        })
+                        .fail(function() {
+                            data.instance.refresh();
+                        });
+                }).on('loaded.jstree', function() {
+                $('#jstree-wrapper').jstree('open_all');
+            });
+
+        }
+
+        function AddTree(name, idParent,newTree) {
+            $.ajax({
+                type: "GET",
+                url: "/Department/_AddDepartment",
+                data: {
+                    name: name,
+                    idParent: idParent
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result.IsSuccess === false) {
+                        window.parent.BoostrapDialogAlert("Thông Báo",
+                            data.result.Message,
+                            window.parent.BootstrapDialog.TYPE_DANGER);
+                    } else {
+                        newTree.instance.set_id(newTree.node, data.result.Id);
+                    }
+                },
+                failure: function () {
+                    alert("fail");
+                }
+            });
+        }
+
+        function EditNode(name,id,idParent) {
+            $.ajax({
+                type: "GET",
+                url: "/Department/EditDepartment",
+                data: {
+                    name: name,
+                    id: id,
+                    idParent: idParent
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result.IsSuccess === false) {
+                        window.parent.BoostrapDialogAlert("Thông Báo", data.result.Message, window.parent.BootstrapDialog.TYPE_DANGER);
+                    }
+                },
+                failure: function () {
+                    alert("fail");
+                }
+            });
+        }
+
+        function DeleteNode(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Department/DeleteDepartment",
+                data: {
+                    id: id
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result.IsSuccess === false) {
+                        window.parent.BoostrapDialogAlert("Thông Báo", data.result.Message, window.parent.BootstrapDialog.TYPE_DANGER);
+                    }
+                },
+                failure: function () {
+                    alert("fail");
+                }
+            });
+        }
+</script>
+

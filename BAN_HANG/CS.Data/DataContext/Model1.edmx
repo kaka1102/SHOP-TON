@@ -1,0 +1,1572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_CSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AddressName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="Tax_Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsParent" Type="bit" />
+          <Property Name="Branch_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="is_active" Type="int" />
+          <Property Name="brand_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Director" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="img_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="url_img" Type="nvarchar" MaxLength="500" />
+          <Property Name="path_img" Type="nvarchar" MaxLength="500" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="LevelRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LevelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuText" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MenuURL" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="IsDisplayWebsite" Type="bit" Nullable="false" />
+          <Property Name="icon" Type="nvarchar" MaxLength="100" />
+          <Property Name="color" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MenuPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuId" Type="int" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="IsCreate" Type="bit" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="IsUpdate" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="IsExport" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Level" Type="int" />
+          <Property Name="HomeUrl" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LevelId" Type="int" />
+        </EntityType>
+        <EntityType Name="service_customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_center" Type="int" />
+          <Property Name="code_center" Type="nvarchar" MaxLength="25" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_card" Type="nvarchar" MaxLength="25" />
+          <Property Name="address" Type="nvarchar" MaxLength="500" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="15" />
+          <Property Name="email" Type="nvarchar" MaxLength="75" />
+          <Property Name="birthday" Type="date" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="25" />
+          <Property Name="status" Type="int" />
+          <Property Name="note" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_card_date" Type="datetime" />
+          <Property Name="id_card_place" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="service_customer_bill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_customer" Type="int" />
+          <Property Name="tenKH" Type="nvarchar" MaxLength="500" />
+          <Property Name="tongtien" Type="float" />
+          <Property Name="giamgia" Type="float" />
+          <Property Name="thucnhan" Type="float" />
+          <Property Name="method" Type="nvarchar" MaxLength="50" />
+          <Property Name="ispay" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="created_by" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_nguoitao" Type="int" />
+          <Property Name="updated_at" Type="datetime" />
+          <Property Name="updated_by" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" />
+          <Property Name="date_sale" Type="date" />
+          <Property Name="id_center" Type="int" />
+          <Property Name="billtype" Type="int" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="tennguoixuat" Type="nvarchar" MaxLength="100" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="service_customer_bill_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_bill" Type="int" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="id_code_product" Type="int" />
+          <Property Name="price" Type="float" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="unit" Type="int" />
+          <Property Name="unit_name" Type="nvarchar" MaxLength="10" />
+          <Property Name="note" Type="nvarchar(max)" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="int" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="groupcodeproduct" Type="nvarchar" MaxLength="100" />
+          <Property Name="create_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sys_attr_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="id_attr" Type="int" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="descripton_attr" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sys_attributes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="attr_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sys_code_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="ngaynhap" Type="datetime" />
+          <Property Name="trangthai" Type="int" />
+          <Property Name="id_nhap" Type="int" />
+          <Property Name="id_center" Type="int" />
+          <Property Name="giatrungbinh" Type="float" />
+          <Property Name="group_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="note_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ngayxuat" Type="datetime" />
+          <Property Name="nguoixuat" Type="nvarchar" MaxLength="50" />
+          <Property Name="tenKH" Type="nvarchar" MaxLength="500" />
+          <Property Name="id_bill_dt" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="bigint" />
+          <Property Name="account" Type="varchar" MaxLength="50" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+          <Property Name="ipAddress" Type="varchar" MaxLength="50" />
+          <Property Name="ipAddressName" Type="varchar" MaxLength="50" />
+          <Property Name="moduleId" Type="varchar" MaxLength="50" />
+          <Property Name="moduleName" Type="varchar" MaxLength="50" />
+          <Property Name="result" Type="bit" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="creatorTime" Type="datetime" />
+          <Property Name="creatorUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_nguonnhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tennguon" Type="nvarchar" MaxLength="500" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sdt" Type="nvarchar" MaxLength="20" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="id_center" Type="int" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sys_Nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ngaynhap" Type="datetime" />
+          <Property Name="soluong" Type="int" Nullable="false" />
+          <Property Name="nguoinhap" Type="int" />
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="tongtien" Type="float" />
+          <Property Name="giatrungbinh" Type="float" />
+          <Property Name="trangthai" Type="bit" />
+          <Property Name="id_center" Type="int" Nullable="false" />
+          <Property Name="id_nguonnhap" Type="int" />
+          <Property Name="group_code_product" Type="varchar" MaxLength="50" />
+          <Property Name="mota" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sys_parameter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="group_para" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="50" />
+          <Property Name="name_display" Type="nvarchar" MaxLength="300" />
+          <Property Name="description" Type="nvarchar" MaxLength="300" />
+          <Property Name="deleted" Type="int" />
+          <Property Name="order_display" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TYPE" Type="varchar" MaxLength="20" />
+          <Property Name="code" Type="varchar" MaxLength="16" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="unit_id" Type="int" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="id_center" Type="int" />
+          <Property Name="soluongban" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_product_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product_parent" Type="int" />
+          <Property Name="id_product_chil" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="350" />
+          <Property Name="code" Type="nvarchar" MaxLength="20" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="sys_tonkho">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product" Type="int" Nullable="false" />
+          <Property Name="soluong" Type="int" Nullable="false" />
+          <Property Name="isactive" Type="bit" Nullable="false" />
+          <Property Name="id_center" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_detail_category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_category" Type="int" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_gioithieu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="noidung" Type="nvarchar(max)" />
+          <Property Name="nguoitao" Type="int" />
+          <Property Name="ngaytao" Type="datetime" />
+          <Property Name="ngaychinhsua" Type="datetime" />
+          <Property Name="nguoichinhsua" Type="int" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="tennguoitao" Type="nvarchar" MaxLength="50" />
+          <Property Name="tennguoisua" Type="nvarchar" MaxLength="50" />
+          <Property Name="tentrang" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_lienhe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hoten" Type="nvarchar" MaxLength="100" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="500" />
+          <Property Name="dienthoai" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="tieude" Type="nvarchar" MaxLength="500" />
+          <Property Name="noidung" Type="nvarchar(max)" />
+          <Property Name="trangthai" Type="int" />
+          <Property Name="id_rep" Type="int" />
+          <Property Name="ngaytraloi" Type="datetime" />
+          <Property Name="nguoitraloi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ngaygui" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_LoaiSP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="isactive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product" Type="int" />
+          <Property Name="gia_nhap" Type="float" />
+          <Property Name="gia_xuat" Type="float" />
+          <Property Name="type_price" Type="nvarchar" MaxLength="50" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="datecreate" Type="datetime" />
+          <Property Name="date_modifiel" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Unit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unit_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="isactive" Type="bit" />
+          <Property Name="description" Type="nvarchar" MaxLength="250" />
+          <Property Name="id_center" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="ProfilePicture" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailSignature" Type="nvarchar" MaxLength="500" />
+          <Property Name="About" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Website" Type="nvarchar" MaxLength="100" />
+          <Property Name="GenderId" Type="int" />
+          <Property Name="MaritalStatusId" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Dated" Type="datetime" />
+          <Property Name="UserCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModify" Type="datetime" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BranchId" Type="int" />
+          <Property Name="PositionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TeamId" Type="int" />
+          <Property Name="on_working" Type="int" />
+          <Property Name="parent_create_time" Type="datetime" />
+          <Property Name="parent_create_by" Type="int" />
+          <Property Name="parent_update_time" Type="datetime" />
+          <Property Name="parent_update_by" Type="int" />
+          <Property Name="user_create_by" Type="int" />
+          <Property Name="user_update_by" Type="int" />
+          <Property Name="isusingaccount" Type="bit" />
+          <Property Name="PhoneExt" Type="nvarchar" MaxLength="20" />
+          <Property Name="CS_number" Type="int" />
+          <Property Name="id_app_cls_push_cs" Type="int" />
+          <Property Name="status_password" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_Menu_dbo_Menu_ParentId">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuPermission_dbo_Menu_MenuId">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="MenuPermission" Type="Self.MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuPermission_dbo_Role_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MenuPermission" Type="Self.MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RoleUser_dbo_Role_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuPermission_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="MenuPermission" Type="Self.MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="RoleUser" Type="Self.RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_BranchId">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_CSModelStoreContainer">
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="img_product" EntityType="Self.img_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LevelRole" EntityType="Self.LevelRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuPermission" EntityType="Self.MenuPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleUser" EntityType="Self.RoleUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="service_customer" EntityType="Self.service_customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="service_customer_bill" EntityType="Self.service_customer_bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="service_customer_bill_detail" EntityType="Self.service_customer_bill_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_attr_product" EntityType="Self.sys_attr_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_attributes" EntityType="Self.sys_attributes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_code_product" EntityType="Self.sys_code_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_log" EntityType="Self.sys_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_nguonnhap" EntityType="Self.sys_nguonnhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_Nhap" EntityType="Self.sys_Nhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_parameter" EntityType="Self.sys_parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_product" EntityType="Self.sys_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_product_detail" EntityType="Self.sys_product_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sys_tonkho" EntityType="Self.sys_tonkho" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_detail_category" EntityType="Self.tbl_detail_category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_gioithieu" EntityType="Self.tbl_gioithieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lienhe" EntityType="Self.tbl_lienhe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_LoaiSP" EntityType="Self.tbl_LoaiSP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_price" EntityType="Self.tbl_price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Unit" EntityType="Self.tbl_Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentId">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Menu1" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuPermission_dbo_Menu_MenuId" Association="Self.FK_dbo_MenuPermission_dbo_Menu_MenuId">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuPermission_dbo_Role_RoleId" Association="Self.FK_dbo_MenuPermission_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RoleUser_dbo_Role_RoleId" Association="Self.FK_dbo_RoleUser_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuPermission_User" Association="Self.FK_MenuPermission_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_User" Association="Self.FK_RoleUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_BranchId" Association="Self.FK_User_BranchId">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_CSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB_CSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Branch" EntityType="DB_CSModel.Branch" />
+          <EntitySet Name="img_product" EntityType="DB_CSModel.img_product" />
+          <EntitySet Name="LevelRole" EntityType="DB_CSModel.LevelRole" />
+          <EntitySet Name="Menu" EntityType="DB_CSModel.Menu" />
+          <EntitySet Name="MenuPermission" EntityType="DB_CSModel.MenuPermission" />
+          <EntitySet Name="Role" EntityType="DB_CSModel.Role" />
+          <EntitySet Name="RoleUser" EntityType="DB_CSModel.RoleUser" />
+          <EntitySet Name="service_customer_bill" EntityType="DB_CSModel.service_customer_bill" />
+          <EntitySet Name="sys_attr_product" EntityType="DB_CSModel.sys_attr_product" />
+          <EntitySet Name="sys_attributes" EntityType="DB_CSModel.sys_attributes" />
+          <EntitySet Name="sys_code_product" EntityType="DB_CSModel.sys_code_product" />
+          <EntitySet Name="sys_log" EntityType="DB_CSModel.sys_log" />
+          <EntitySet Name="sys_parameter" EntityType="DB_CSModel.sys_parameter" />
+          <EntitySet Name="sys_product_detail" EntityType="DB_CSModel.sys_product_detail" />
+          <EntitySet Name="tbl_price" EntityType="DB_CSModel.tbl_price" />
+          <EntitySet Name="User" EntityType="DB_CSModel.User" />
+          <AssociationSet Name="FK_User_BranchId" Association="DB_CSModel.FK_User_BranchId">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentId" Association="DB_CSModel.FK_dbo_Menu_dbo_Menu_ParentId">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Menu1" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuPermission_dbo_Menu_MenuId" Association="DB_CSModel.FK_dbo_MenuPermission_dbo_Menu_MenuId">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuPermission_dbo_Role_RoleId" Association="DB_CSModel.FK_dbo_MenuPermission_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuPermission_User" Association="DB_CSModel.FK_MenuPermission_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="MenuPermission" EntitySet="MenuPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RoleUser_dbo_Role_RoleId" Association="DB_CSModel.FK_dbo_RoleUser_dbo_Role_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleUser_User" Association="DB_CSModel.FK_RoleUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="RoleUser" EntitySet="RoleUser" />
+          </AssociationSet>
+          <EntitySet Name="sys_tonkho" EntityType="DB_CSModel.sys_tonkho" />
+          <EntitySet Name="sys_Nhap" EntityType="DB_CSModel.sys_Nhap" />
+          <EntitySet Name="service_customer_bill_detail" EntityType="DB_CSModel.service_customer_bill_detail" />
+          <EntitySet Name="service_customer" EntityType="DB_CSModel.service_customer" />
+          <EntitySet Name="tbl_Unit" EntityType="DB_CSModel.tbl_Unit" />
+          <EntitySet Name="sys_nguonnhap" EntityType="DB_CSModel.sys_nguonnhap" />
+          <EntitySet Name="tbl_detail_category" EntityType="DB_CSModel.tbl_detail_category" />
+          <EntitySet Name="tbl_LoaiSP" EntityType="DB_CSModel.tbl_LoaiSP" />
+          <EntitySet Name="sys_product" EntityType="DB_CSModel.sys_product" />
+          <EntitySet Name="tbl_gioithieu" EntityType="DB_CSModel.tbl_gioithieu" />
+          <EntitySet Name="tbl_lienhe" EntityType="DB_CSModel.tbl_lienhe" />
+        </EntityContainer>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Tax_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsParent" Type="Boolean" />
+          <Property Name="Branch_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Int32" />
+          <Property Name="brand_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Director" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="DB_CSModel.FK_User_BranchId" FromRole="Branch" ToRole="User" />
+        </EntityType>
+        <EntityType Name="img_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="url_img" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="path_img" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LevelRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuText" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MenuURL" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="IsDisplayWebsite" Type="Boolean" Nullable="false" />
+          <Property Name="icon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Menu1" Relationship="DB_CSModel.FK_dbo_Menu_dbo_Menu_ParentId" FromRole="Menu" ToRole="Menu1" />
+          <NavigationProperty Name="Menu2" Relationship="DB_CSModel.FK_dbo_Menu_dbo_Menu_ParentId" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="MenuPermission" Relationship="DB_CSModel.FK_dbo_MenuPermission_dbo_Menu_MenuId" FromRole="Menu" ToRole="MenuPermission" />
+        </EntityType>
+        <EntityType Name="MenuPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="IsCreate" Type="Boolean" />
+          <Property Name="IsRead" Type="Boolean" />
+          <Property Name="IsUpdate" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="IsExport" Type="Boolean" />
+          <NavigationProperty Name="Menu" Relationship="DB_CSModel.FK_dbo_MenuPermission_dbo_Menu_MenuId" FromRole="MenuPermission" ToRole="Menu" />
+          <NavigationProperty Name="Role" Relationship="DB_CSModel.FK_dbo_MenuPermission_dbo_Role_RoleId" FromRole="MenuPermission" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="DB_CSModel.FK_MenuPermission_User" FromRole="MenuPermission" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="HomeUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MenuPermission" Relationship="DB_CSModel.FK_dbo_MenuPermission_dbo_Role_RoleId" FromRole="Role" ToRole="MenuPermission" />
+          <NavigationProperty Name="RoleUser" Relationship="DB_CSModel.FK_dbo_RoleUser_dbo_Role_RoleId" FromRole="Role" ToRole="RoleUser" />
+        </EntityType>
+        <EntityType Name="RoleUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LevelId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="DB_CSModel.FK_dbo_RoleUser_dbo_Role_RoleId" FromRole="RoleUser" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="DB_CSModel.FK_RoleUser_User" FromRole="RoleUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="service_customer_bill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_customer" Type="Int32" />
+          <Property Name="tenKH" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="tongtien" Type="Double" />
+          <Property Name="giamgia" Type="Double" />
+          <Property Name="thucnhan" Type="Double" />
+          <Property Name="method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ispay" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_nguoitao" Type="Int32" />
+          <Property Name="updated_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="date_sale" Type="DateTime" Precision="0" />
+          <Property Name="id_center" Type="Int32" />
+          <Property Name="billtype" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tennguoixuat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sys_attr_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="id_attr" Type="Int32" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="descripton_attr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sys_attributes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="attr_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sys_code_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="ngaynhap" Type="DateTime" Precision="3" />
+          <Property Name="trangthai" Type="Int32" />
+          <Property Name="id_nhap" Type="Int32" />
+          <Property Name="id_center" Type="Int32" />
+          <Property Name="giatrungbinh" Type="Double" />
+          <Property Name="group_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="note_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ngayxuat" Type="DateTime" Precision="3" />
+          <Property Name="nguoixuat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tenKH" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="id_bill_dt" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sys_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="Int64" />
+          <Property Name="account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ipAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ipAddressName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="moduleId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="moduleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="result" Type="Boolean" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="creatorTime" Type="DateTime" Precision="3" />
+          <Property Name="creatorUserId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sys_parameter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="group_para" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name_display" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Int32" />
+          <Property Name="order_display" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sys_product_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product_parent" Type="Int32" />
+          <Property Name="id_product_chil" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="quantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_price">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="gia_nhap" Type="Double" />
+          <Property Name="gia_xuat" Type="Double" />
+          <Property Name="type_price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="datecreate" Type="DateTime" Precision="3" />
+          <Property Name="date_modifiel" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailSignature" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="About" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GenderId" Type="Int32" />
+          <Property Name="MaritalStatusId" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Dated" Type="DateTime" Precision="3" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModify" Type="DateTime" Precision="3" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TeamId" Type="Int32" />
+          <Property Name="on_working" Type="Int32" />
+          <Property Name="parent_create_time" Type="DateTime" Precision="3" />
+          <Property Name="parent_create_by" Type="Int32" />
+          <Property Name="parent_update_time" Type="DateTime" Precision="3" />
+          <Property Name="parent_update_by" Type="Int32" />
+          <Property Name="user_create_by" Type="Int32" />
+          <Property Name="user_update_by" Type="Int32" />
+          <Property Name="isusingaccount" Type="Boolean" />
+          <Property Name="PhoneExt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CS_number" Type="Int32" />
+          <Property Name="id_app_cls_push_cs" Type="Int32" />
+          <Property Name="status_password" Type="Int32" />
+          <NavigationProperty Name="Branch" Relationship="DB_CSModel.FK_User_BranchId" FromRole="User" ToRole="Branch" />
+          <NavigationProperty Name="MenuPermission" Relationship="DB_CSModel.FK_MenuPermission_User" FromRole="User" ToRole="MenuPermission" />
+          <NavigationProperty Name="RoleUser" Relationship="DB_CSModel.FK_RoleUser_User" FromRole="User" ToRole="RoleUser" />
+        </EntityType>
+        <Association Name="FK_User_BranchId">
+          <End Type="DB_CSModel.Branch" Role="Branch" Multiplicity="0..1" />
+          <End Type="DB_CSModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Menu_dbo_Menu_ParentId">
+          <End Type="DB_CSModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="DB_CSModel.Menu" Role="Menu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuPermission_dbo_Menu_MenuId">
+          <End Type="DB_CSModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="DB_CSModel.MenuPermission" Role="MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuPermission_dbo_Role_RoleId">
+          <End Type="DB_CSModel.Role" Role="Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_CSModel.MenuPermission" Role="MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuPermission_User">
+          <End Type="DB_CSModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DB_CSModel.MenuPermission" Role="MenuPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuPermission">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RoleUser_dbo_Role_RoleId">
+          <End Type="DB_CSModel.Role" Role="Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DB_CSModel.RoleUser" Role="RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleUser_User">
+          <End Type="DB_CSModel.User" Role="User" Multiplicity="1" />
+          <End Type="DB_CSModel.RoleUser" Role="RoleUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sys_tonkho">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="soluong" Type="Int32" Nullable="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+          <Property Name="id_center" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sys_Nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ngaynhap" Type="DateTime" Precision="3" />
+          <Property Name="soluong" Type="Int32" Nullable="false" />
+          <Property Name="nguoinhap" Type="Int32" />
+          <Property Name="id_product" Type="Int32" Nullable="false" />
+          <Property Name="tongtien" Type="Double" />
+          <Property Name="giatrungbinh" Type="Double" />
+          <Property Name="trangthai" Type="Boolean" />
+          <Property Name="id_center" Type="Int32" Nullable="false" />
+          <Property Name="id_nguonnhap" Type="Int32" />
+          <Property Name="group_code_product" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mota" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="service_customer_bill_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_bill" Type="Int32" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="id_code_product" Type="Int32" />
+          <Property Name="price" Type="Double" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="unit" Type="Int32" />
+          <Property Name="unit_name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="product_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="groupcodeproduct" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="create_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="service_customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_center" Type="Int32" />
+          <Property Name="code_center" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_card" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="birthday" Type="DateTime" Precision="0" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_card_date" Type="DateTime" Precision="3" />
+          <Property Name="id_card_place" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_Unit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unit_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="id_center" Type="Int32" />
+        </EntityType>
+        <EntityType Name="sys_nguonnhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tennguon" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="diachi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sdt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="id_center" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_detail_category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_category" Type="Int32" />
+          <Property Name="id_product" Type="Int32" />
+          <Property Name="isactive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tbl_LoaiSP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="sys_product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isactive" Type="Boolean" />
+          <Property Name="unit_id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_center" Type="Int32" />
+          <Property Name="soluongban" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_gioithieu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="noidung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="nguoitao" Type="Int32" />
+          <Property Name="ngaytao" Type="DateTime" Precision="3" />
+          <Property Name="ngaychinhsua" Type="DateTime" Precision="3" />
+          <Property Name="nguoichinhsua" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tennguoitao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tennguoisua" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tentrang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_lienhe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hoten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="diachi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="dienthoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="tieude" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="noidung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="trangthai" Type="Int32" />
+          <Property Name="id_rep" Type="Int32" />
+          <Property Name="ngaytraloi" Type="DateTime" Precision="3" />
+          <Property Name="nguoitraloi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ngaygui" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_CSModelStoreContainer" CdmEntityContainer="DB_CSEntities1">
+          <EntitySetMapping Name="Branch">
+            <EntityTypeMapping TypeName="DB_CSModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Director" ColumnName="Director" />
+                <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Branch_code" ColumnName="Branch_code" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+                <ScalarProperty Name="Tax_Number" ColumnName="Tax_Number" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="img_product">
+            <EntityTypeMapping TypeName="DB_CSModel.img_product">
+              <MappingFragment StoreEntitySet="img_product">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="path_img" ColumnName="path_img" />
+                <ScalarProperty Name="url_img" ColumnName="url_img" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LevelRole">
+            <EntityTypeMapping TypeName="DB_CSModel.LevelRole">
+              <MappingFragment StoreEntitySet="LevelRole">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="DB_CSModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="IsDisplayWebsite" ColumnName="IsDisplayWebsite" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MenuURL" ColumnName="MenuURL" />
+                <ScalarProperty Name="MenuText" ColumnName="MenuText" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuPermission">
+            <EntityTypeMapping TypeName="DB_CSModel.MenuPermission">
+              <MappingFragment StoreEntitySet="MenuPermission">
+                <ScalarProperty Name="IsExport" ColumnName="IsExport" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsUpdate" ColumnName="IsUpdate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="IsCreate" ColumnName="IsCreate" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DB_CSModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="HomeUrl" ColumnName="HomeUrl" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleUser">
+            <EntityTypeMapping TypeName="DB_CSModel.RoleUser">
+              <MappingFragment StoreEntitySet="RoleUser">
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service_customer_bill">
+            <EntityTypeMapping TypeName="DB_CSModel.service_customer_bill">
+              <MappingFragment StoreEntitySet="service_customer_bill">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="tennguoixuat" ColumnName="tennguoixuat" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="billtype" ColumnName="billtype" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="date_sale" ColumnName="date_sale" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="id_nguoitao" ColumnName="id_nguoitao" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="ispay" ColumnName="ispay" />
+                <ScalarProperty Name="method" ColumnName="method" />
+                <ScalarProperty Name="thucnhan" ColumnName="thucnhan" />
+                <ScalarProperty Name="giamgia" ColumnName="giamgia" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+                <ScalarProperty Name="tenKH" ColumnName="tenKH" />
+                <ScalarProperty Name="id_customer" ColumnName="id_customer" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_attr_product">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_attr_product">
+              <MappingFragment StoreEntitySet="sys_attr_product">
+                <ScalarProperty Name="descripton_attr" ColumnName="descripton_attr" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="id_attr" ColumnName="id_attr" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_attributes">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_attributes">
+              <MappingFragment StoreEntitySet="sys_attributes">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="attr_name" ColumnName="attr_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_code_product">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_code_product">
+              <MappingFragment StoreEntitySet="sys_code_product">
+                <ScalarProperty Name="id_bill_dt" ColumnName="id_bill_dt" />
+                <ScalarProperty Name="tenKH" ColumnName="tenKH" />
+                <ScalarProperty Name="nguoixuat" ColumnName="nguoixuat" />
+                <ScalarProperty Name="ngayxuat" ColumnName="ngayxuat" />
+                <ScalarProperty Name="note_code" ColumnName="note_code" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="group_code" ColumnName="group_code" />
+                <ScalarProperty Name="giatrungbinh" ColumnName="giatrungbinh" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="id_nhap" ColumnName="id_nhap" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="ngaynhap" ColumnName="ngaynhap" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_log">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_log">
+              <MappingFragment StoreEntitySet="sys_log">
+                <ScalarProperty Name="creatorUserId" ColumnName="creatorUserId" />
+                <ScalarProperty Name="creatorTime" ColumnName="creatorTime" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+                <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+                <ScalarProperty Name="ipAddressName" ColumnName="ipAddressName" />
+                <ScalarProperty Name="ipAddress" ColumnName="ipAddress" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="account" ColumnName="account" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_parameter">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_parameter">
+              <MappingFragment StoreEntitySet="sys_parameter">
+                <ScalarProperty Name="order_display" ColumnName="order_display" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name_display" ColumnName="name_display" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="group_para" ColumnName="group_para" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_product_detail">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_product_detail">
+              <MappingFragment StoreEntitySet="sys_product_detail">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_product_chil" ColumnName="id_product_chil" />
+                <ScalarProperty Name="id_product_parent" ColumnName="id_product_parent" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_price">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_price">
+              <MappingFragment StoreEntitySet="tbl_price">
+                <ScalarProperty Name="date_modifiel" ColumnName="date_modifiel" />
+                <ScalarProperty Name="datecreate" ColumnName="datecreate" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="type_price" ColumnName="type_price" />
+                <ScalarProperty Name="gia_xuat" ColumnName="gia_xuat" />
+                <ScalarProperty Name="gia_nhap" ColumnName="gia_nhap" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DB_CSModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="status_password" ColumnName="status_password" />
+                <ScalarProperty Name="id_app_cls_push_cs" ColumnName="id_app_cls_push_cs" />
+                <ScalarProperty Name="CS_number" ColumnName="CS_number" />
+                <ScalarProperty Name="PhoneExt" ColumnName="PhoneExt" />
+                <ScalarProperty Name="isusingaccount" ColumnName="isusingaccount" />
+                <ScalarProperty Name="user_update_by" ColumnName="user_update_by" />
+                <ScalarProperty Name="user_create_by" ColumnName="user_create_by" />
+                <ScalarProperty Name="parent_update_by" ColumnName="parent_update_by" />
+                <ScalarProperty Name="parent_update_time" ColumnName="parent_update_time" />
+                <ScalarProperty Name="parent_create_by" ColumnName="parent_create_by" />
+                <ScalarProperty Name="parent_create_time" ColumnName="parent_create_time" />
+                <ScalarProperty Name="on_working" ColumnName="on_working" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="DateModify" ColumnName="DateModify" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="Dated" ColumnName="Dated" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="MaritalStatusId" ColumnName="MaritalStatusId" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="EmailSignature" ColumnName="EmailSignature" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_tonkho">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_tonkho">
+              <MappingFragment StoreEntitySet="sys_tonkho">
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_Nhap">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_Nhap">
+              <MappingFragment StoreEntitySet="sys_Nhap">
+                <ScalarProperty Name="mota" ColumnName="mota" />
+                <ScalarProperty Name="group_code_product" ColumnName="group_code_product" />
+                <ScalarProperty Name="id_nguonnhap" ColumnName="id_nguonnhap" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="giatrungbinh" ColumnName="giatrungbinh" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="nguoinhap" ColumnName="nguoinhap" />
+                <ScalarProperty Name="soluong" ColumnName="soluong" />
+                <ScalarProperty Name="ngaynhap" ColumnName="ngaynhap" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service_customer_bill_detail">
+            <EntityTypeMapping TypeName="DB_CSModel.service_customer_bill_detail">
+              <MappingFragment StoreEntitySet="service_customer_bill_detail">
+                <ScalarProperty Name="create_at" ColumnName="create_at" />
+                <ScalarProperty Name="groupcodeproduct" ColumnName="groupcodeproduct" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="id_code_product" ColumnName="id_code_product" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id_bill" ColumnName="id_bill" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="service_customer">
+            <EntityTypeMapping TypeName="DB_CSModel.service_customer">
+              <MappingFragment StoreEntitySet="service_customer">
+                <ScalarProperty Name="id_card_place" ColumnName="id_card_place" />
+                <ScalarProperty Name="id_card_date" ColumnName="id_card_date" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="id_card" ColumnName="id_card" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="code_center" ColumnName="code_center" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Unit">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_Unit">
+              <MappingFragment StoreEntitySet="tbl_Unit">
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_nguonnhap">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_nguonnhap">
+              <MappingFragment StoreEntitySet="sys_nguonnhap">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="tennguon" ColumnName="tennguon" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_detail_category">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_detail_category">
+              <MappingFragment StoreEntitySet="tbl_detail_category">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id_category" ColumnName="id_category" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_LoaiSP">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_LoaiSP">
+              <MappingFragment StoreEntitySet="tbl_LoaiSP">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sys_product">
+            <EntityTypeMapping TypeName="DB_CSModel.sys_product">
+              <MappingFragment StoreEntitySet="sys_product">
+                <ScalarProperty Name="soluongban" ColumnName="soluongban" />
+                <ScalarProperty Name="id_center" ColumnName="id_center" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_gioithieu">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_gioithieu">
+              <MappingFragment StoreEntitySet="tbl_gioithieu">
+                <ScalarProperty Name="tentrang" ColumnName="tentrang" />
+                <ScalarProperty Name="tennguoisua" ColumnName="tennguoisua" />
+                <ScalarProperty Name="tennguoitao" ColumnName="tennguoitao" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="nguoichinhsua" ColumnName="nguoichinhsua" />
+                <ScalarProperty Name="ngaychinhsua" ColumnName="ngaychinhsua" />
+                <ScalarProperty Name="ngaytao" ColumnName="ngaytao" />
+                <ScalarProperty Name="nguoitao" ColumnName="nguoitao" />
+                <ScalarProperty Name="noidung" ColumnName="noidung" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lienhe">
+            <EntityTypeMapping TypeName="DB_CSModel.tbl_lienhe">
+              <MappingFragment StoreEntitySet="tbl_lienhe">
+                <ScalarProperty Name="ngaygui" ColumnName="ngaygui" />
+                <ScalarProperty Name="nguoitraloi" ColumnName="nguoitraloi" />
+                <ScalarProperty Name="ngaytraloi" ColumnName="ngaytraloi" />
+                <ScalarProperty Name="id_rep" ColumnName="id_rep" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="noidung" ColumnName="noidung" />
+                <ScalarProperty Name="tieude" ColumnName="tieude" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="dienthoai" ColumnName="dienthoai" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

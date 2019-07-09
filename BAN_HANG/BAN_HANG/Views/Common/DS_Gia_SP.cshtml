@@ -1,0 +1,19 @@
+﻿
+
+<select id="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+
+    @if (Model.Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            <option value="@(item.value)" @(ViewBag.idSelected.ToString() == item.value.ToString() ? "selected='selected'" : "")>@(item.name_display)</option>
+        }
+    }
+    else
+    {
+        <option value="0">--Không có loại giá--</option>
+    }
+</select>
+
+
+

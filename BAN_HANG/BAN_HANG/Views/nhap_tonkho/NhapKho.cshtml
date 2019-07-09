@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = " - Nhập kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Sản phẩm<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        @Html.Action("DS_SP", "Common", new { id = "cbx-product", idSelected = -1, isDisable = false })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Số lượng<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-quantity" type="number" value="1" class="form-control" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 190 || event.keyCode == 110 || event.keyCode == 109 || event.keyCode == 107 || event.keyCode == 40) ? false : true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Nguồn nhập<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        @Html.Action("DS_NguonNhap", "Common", new { id = "cbx-nguonnhap", idSelected = -1, isDisable = false })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tổng tiền<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        @*<input type="text" id="total-price" value="0" class="form-control" data-mask="999,999,999,999 đ" placeholder="">*@
+                                        <input id="total-price" type="text" max="999999999999" class="form-control" value="0" onkeyup='validate(event, this)' style="color: red !important; border: 1px solid red !important;" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Mã nhóm hàng<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-group-code" readonly="readonly" type="text" value="" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Ngày nhập<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-date-start" type="text" value="@(DateTime.Now.ToString("dd/MM/yyyy"))" readonly="" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Mô tả<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <textarea rows="5" style="width: 100% !important" id="txt-des" placeholder="Mô tả nhóm hàng"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-2 col-xs-offset-5">
+                                    <button id="btn-addnew" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $("#txt-date-start").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "mm/dd/yy"
+        });
+
+        CreateGroupCodeProduct();
+        BindButtonSubmitClick();
+    });
+
+
+    function CreateGroupCodeProduct() {
+        var group_code = '';
+        $('#cbx-product').change(function () {
+            //var a1 = $('#cbx-product').find('option:selected').getAttribute('data-code');
+            //var a2 = $('#cbx-nguonnhap').find('option:selected').getAttribute('data-code');
+
+            var a1 = $('#cbx-product option:selected').attr('data-code');
+            var a2 = $('#cbx-nguonnhap option:selected').attr('data-code');
+
+            if (a1 === null || a1 === undefined) {
+                a1 = "";
+            }
+            if (a2 === null || a2 === undefined) {
+                a2 = "";
+            }
+            if (a2 != undefined && a1 != undefined && a1 != "" && a2 != "") {
+                a2 = "-" + a2;
+            }
+            group_code = a1 + a2 + RanDomKey();
+            $('#txt-group-code').val(group_code);
+        });
+        $('#cbx-nguonnhap').change(function () {
+
+            //var a1 = $('#cbx-product').find('option:selected').getAttribute('data-code');
+            //var a2 = $('#cbx-nguonnhap').find('option:selected').getAttribute('data-code');
+
+            var a1 = $('#cbx-product option:selected').attr('data-code');
+            var a2 = $('#cbx-nguonnhap option:selected').attr('data-code');
+            if (a1 === null || a1 === undefined) {
+                a1 = "";
+                $('#txt-group-code').val(a2);
+            }
+            if (a2 === null || a2 === undefined) {
+                a2 = "";
+                $('#txt-group-code').val(a1);
+            }
+            if (a2 != undefined && a1 != undefined && a1 != "" && a2 != "") {
+                a2 = "-" + a2;
+            }
+            group_code = a1 + a2 + RanDomKey();
+            $('#txt-group-code').val(group_code);
+        });
+    }
+
+    function BindButtonSubmitClick() {
+        $("#btn-addnew").click(function () {
+
+            var id_product = $('#cbx-product').find('option:selected').val();
+            var soluong = $("#txt-quantity").val();
+            var id_nguonnhap = $('#cbx-nguonnhap').find('option:selected').val();
+            var tongtien = $("#total-price").val();
+            tongtien = tongtien.replace(new RegExp(',', 'g'), '');
+
+            var group_code_product = $("#txt-group-code").val();
+            var ngaynhap = $("#txt-date-start").val();
+            var mota = $("#txt-des").val();
+
+            var data = {
+
+                id_product: id_product,
+                soluong: soluong,
+                id_nguonnhap: id_nguonnhap,
+                tongtien: tongtien,
+                group_code_product: group_code_product,
+                ngaynhap: ngaynhap,
+                mota: mota
+
+            }
+            CallAjax("GET", '@Url.Action("_NhapKho")', data, AddNewCallBack);
+        });
+    }
+    function AddNewCallBack(data) {
+        AppendToToastr("Thông báo", data.result.Message);
+    }
+</script>

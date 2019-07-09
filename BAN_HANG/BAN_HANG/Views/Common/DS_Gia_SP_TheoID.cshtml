@@ -1,0 +1,27 @@
+﻿
+<select id="@ViewBag.id" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "") class="form-control m-b" name="account">
+    @if (Model.Count > 0)
+    {
+        @*<option value="-1" selected="selected" disabled="disabled">Chọn giá sản phẩm</option>*@
+        foreach (var item in Model)
+        {
+            <option data-id="@(item.id)" data-gia-xuat="@(item.gia_xuat)" value="@(item.value)">@( item.name_display + " - " + item.gia_xuat)</option>
+        }
+    }
+    else
+    {
+        <option value="0">--Không có giá--</option>
+    }
+</select>
+
+<script>
+    $(function() {
+        $('#cbx-chose-price').change(function () {
+            var id_price = $(this).find('option:selected').attr('data-id');
+            var gia_xuat = $(this).find('option:selected').attr('data-gia-xuat');
+
+            var button = $("#btn-add-product");
+            button.attr({ "data-id-price": id_price, "data-gia-xuat": gia_xuat });
+        });
+    });
+</script>

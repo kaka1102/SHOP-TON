@@ -1,0 +1,108 @@
+﻿
+
+@{
+    ViewBag.Title = "Thêm mới thông số kỹ thuật";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+<style>
+    .button-checkbox {
+        height: 20px;
+        width: 20px;
+    }
+</style>
+<style>
+    .state-icon {
+        left: -5px;
+    }
+
+
+    .well .list-group {
+        margin-bottom: 0px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Thông tin cần thêm mới</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-8 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Tên thông số<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        @(Html.Action("DS_thongso_theoid_sp", "Common", new { id = "cbx-TS", idSelected = 0, id_product = ViewBag.id }))
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 ">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Mô tả<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="txt_des" rows="3" placeholder="Nhập mô tả ..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-2 col-xs-offset-5">
+                                    <button id="btn-add-new-item" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Lưu lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+
+        ThemmoiThongso();
+    });
+
+
+    function ThemmoiThongso() {
+        $('#btn-add-new-item').click(function () {
+
+            var id_attr = $("#cbx-TS").find('option:selected').val();
+            var value_attr = $('#txt_des').val();
+
+            var data = {
+                id_attr: id_attr,
+                value_attr: value_attr,
+                id_product : @ViewBag.id
+            }
+            CallAjax("GET", '@Url.Action("_Themmoi_thongso")', data, AddNewCallBack);
+        });
+    }
+
+    function AddNewCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+            window.parent.LoadListService();
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+        AppendToToastr("Chú ý", data.result.Message);
+    }
+</script>
+
+
+
+
+
+

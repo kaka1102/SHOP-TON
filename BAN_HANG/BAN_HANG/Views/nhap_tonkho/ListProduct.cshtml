@@ -1,0 +1,84 @@
+﻿
+@using CS.Common.Const
+@using CS.Data.Model
+@{
+    var count = 0;
+    var model = (List<ListDetailProduct>)Model;
+}
+<table id="tbl-list-service" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>STT</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn vị tính</th>
+            <th>Số lượng tồn</th>
+            <th>Trạng thái</th>
+            <th>Tùy chọn</th>
+        </tr>
+
+    </thead>
+    @foreach (var item in model)
+    {
+        <tr>
+            <td class="details-control" data-id="@(item.id)"></td>
+            <td count="@(count++)">@(count)</td>
+            <td>@(item.code)</td>
+            <td>@(item.product_name)</td>
+            <td>@(item.unit_name)</td>
+            <td>
+                <label style="float: left;color: blue">@(item.soluong)</label>
+                <button class="btn btn-success btn-circle hint--top" data-id="@(item.id)" onclick="BindButtonCongSL(this)" type="button" aria-label="Cộng số lượng" style="float: right">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-danger btn-circle hint--top" data-id="@(item.id)" onclick="BindButtonTruSL(this)" type="button" aria-label="Trừ số lượng" style="float: right;margin-right: 5px;">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </td>
+            <td>@Html.Raw(item.isactive == true ? "<span style='color:Blue;font-weight: bold;'>Đang Bán</span>" : "<span style='color:red;font-weight: bold;'>Không bán</span>") </td>
+            <td>
+                <a data-id="@(item.id)" href="/nhap_tonkho/XemLichSuNhapHang?id_product=@(item.id)" target="_blank" class="btn btn-primary dim  icon-index hint--right" aria-label="Lịch sử nhập" type="button">
+                    <i class="fa fa-clock-o"></i>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    $(function() {
+        var table = $('#tbl-list-service').dataTable();
+        var _table = $("#tbl-list-service").DataTable();
+
+        table.on('click',
+            '.details-control',
+            function() {
+                var tr = $(this).closest('tr');
+                var row = _table.row(tr);
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "/nhap_tonkho/Soluongchitiet_SP",
+                    data: {
+                        id: id
+                    },
+                    type: "GET",
+                    dataType: "html",
+                    success: function(data) {
+                        if (row.child.isShown()) {
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            row.child(data).show();
+                            tr.addClass('shown');
+                        }
+                        return data;
+                    },
+                    beforeSend: function() {
+                    }
+                });
+            });
+    });
+
+</script>
+
+

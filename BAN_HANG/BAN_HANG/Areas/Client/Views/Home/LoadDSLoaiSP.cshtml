@@ -1,0 +1,20 @@
+﻿@using CS.Data.DataContext
+
+@{
+    var data = (List<tbl_LoaiSP>)Model;
+}
+
+<h4>LOẠI SẢN PHẨM</h4>
+<ul>
+    @if (data.Count > 0)
+    {
+        foreach (var item in data)
+        {
+            <li><a href="/Home/CategoryProduct/@item.id"><i> </i>@(item.category_name)</a></li>
+        }
+    }
+    else
+    {
+        <li><a href="#"><i> </i>Không có dữ liệu</a></li>
+    }
+</ul>

@@ -1,0 +1,131 @@
+﻿@using CS.Common.Untils
+@using CS.Data.Model
+
+@{
+    ViewBag.Title = "ChitietSP";
+    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var data = (ChitietSP)Model;
+}
+<style>
+    .title-detail {
+        font-size: 1.0em;
+        color: #fd5f36;
+        font-weight: 600;
+    }
+
+    .title-detail2 {
+        font-size: 1.4em;
+        color: #fd5f36;
+        font-weight: 600;
+    }
+</style>
+<div class="single">
+    <div class="col-md-9 top-in-single">
+        @if (data != null)
+        {
+            if (data.LstImg.Count > 0)
+            {
+                <div class="col-md-5 single-top">
+                    <ul id="etalage" class="etalage" style="display: block; width: 302px; height: 535px;">
+
+                        @foreach (var item in data.LstImg)
+                        {
+                            <li>
+                                <a href="optionallink.html">
+                                    <img class="etalage_thumb_image img-responsive" src="@(item.path_img)" alt="">
+                                    <img class="etalage_source_image img-responsive" src="@(item.path_img)" alt="">
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+            }
+            else
+            {
+                <h3>Không có ảnh</h3>
+            }
+
+
+            //mo ta
+            <div class="col-md-7 single-top-in">
+                <div class="single-para">
+                    <div class="available">
+                        <h4> <span class="title-detail">Tên sản phẩm : </span> @(data.name)</h4>
+                    </div>
+                    <div class="available">
+                        <span class="add-to">Giá : @(DisplayUntil.DisplayMoney(data.gia_xuat)) đ</span>
+                        <a href="#" class="hvr-shutter-in-vertical cart-to">Add to Cart</a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="available">
+                        <span class="title-detail2">Thông số kỹ thuật :</span>
+                        <ul style="width: 100%">
+                            @if (data.LstAttrProduct.Count > 0)
+                            {
+
+                                var lstAttr = data.LstAttrProduct.ToList().GroupBy(m => m.attr_name).ToList();
+                                foreach (var itemAttr in lstAttr)
+                                {
+                            <li style="width: 48%">
+                                @(itemAttr.Key)
+                                <select style="float: right">
+                                    @foreach (var attrDetail in data.LstAttrProduct.FindAll(m => m.attr_name == itemAttr.Key).ToList())
+                                            {
+                                            <option>@(attrDetail.descripton_attr)</option>
+                                            }
+                                </select>
+                            </li>
+                                }
+                            }
+                            else
+                            {
+                            <li>Không có thông tin</li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    <div class="available">
+                        <ul style="width: 100%">
+                            <li style="width: 100%"><span style="width: 100%; color: #f95a32; font-size: 1.4em; font-weight: 600">Số lượng : </span> <input value="1" min="1" style="width: 40%" type="number" /></li>
+                        </ul>
+                    </div>
+                    <div class="available">
+                        <span class="title-detail2">Mô tả :</span>
+                        <p>@(data.description)</p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+
+        }
+        else
+        {
+            <h3>Không có dữ liệu</h3>
+        }
+
+        @*xem them*@
+
+        @Html.Action("LoadSPLienquan", new { id_sp = ViewBag.id })
+    </div>
+
+    <div class="col-md-3">
+        <div class="single-bottom">
+            @Html.Action("LoadDSLoaiSP")
+        </div>
+        <div class="single-bottom">
+            @Html.Action("SanPhamMoi")
+        </div>
+        <div class="single-bottom">
+            @Html.Action("Sanphamkhac", new { id_sp = ViewBag.id })
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>

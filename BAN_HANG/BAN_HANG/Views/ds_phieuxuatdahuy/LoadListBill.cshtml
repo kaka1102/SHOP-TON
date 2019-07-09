@@ -1,0 +1,226 @@
+﻿
+
+@using CS.Common.Const
+
+<div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="tbl-content" class="table table-bordered table-hover" style="width: 100% !important">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên KH</th>
+                            <th>Số ĐT</th>
+                            <th>Địa chỉ</th>
+                            <th>Ngày xuất phiếu</th>
+                            <th>Số phiếu</th>
+                            <th>Người xuất</th>
+                            <th>Loại</th>
+                            <th style="width: 15%">Tùy chọn</th>
+                            <th style="width: 10%">Trạng thái</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        LoadAllBillProcess();
+        $('#txt-date-start').change(function() {
+            $('#tbl-content').dataTable().api().ajax.url('/danhsachphieuxuat/_LoadListBill?date_sale=' + $('#txt-date-start').val() + "&status=2" ).load();
+        });
+    });
+
+    function LoadAllBillProcess() {
+
+        var tblContent = $('#tbl-content').dataTable({
+            ajax: {
+                url: "/danhsachphieuxuat/_LoadListBill?date_sale="+$('#txt-date-start').val()+"&status=2",
+                type: 'POST'
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'RowNum',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tenKH',
+                    class: 'text-center'
+                },
+                {
+                    data: 'mobile',
+                    class: 'text-center'
+                },
+                {
+                    data: 'address',
+                    class: 'text-center'
+                },
+                {
+                    data: 'date_sale',
+                    class: 'text-center'
+                },
+                {
+                    data: 'code',
+                    class: 'text-center'
+                },
+                {
+                    data: 'tennguoixuat',
+                    class: 'text-center'
+                },
+                {
+                    data: 'type',
+                    mRender:function(data) {
+                        if (data === "DL" ) {
+                            return data = "Xuất đại lý";
+                        } else if (data === "BL") {
+                            return data = "Bán lẻ";
+                        } else {
+                            return data = "Bán theo đơn";
+                        }
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'id',
+                    mRender: function (data) {
+                        return '<a style="max-width: calc(30% - 3px);" class="btn btn-block btn-warning hint--top view-doc" aria-label="In phiếu"><i class="fa fa-print"></i></a>' +
+                               //'<a style="max-width: calc(30% - 3px); margin-top:0; margin-left:3px;" class=" btn btn-block btn-danger cancel-sale hint--top" aria-label="Hủy đơn hàng"><i class="fa fa-times-circle"></i></a>' +
+                               '<a target="_blank" href="/danhsachphieuxuat/Chinhsuadonhang?id_bill='+data+'" style="max-width: calc(30% - 3px); margin-top:0; margin-left:3px;" class="btn btn-block btn-primary edit-sale hint--top" aria-label="Xem đơn hàng"><i class="fa fa-edit"></i></a>';
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'status',
+                    mRender: function (data) {
+
+                        if (data ===0) {
+                            return '<a style="max-width: 100%; margin-top:0; margin-left:3px;" type="button"  class=" btn btn-block btn-success complete-sell"><i class="fa fa-caret-square-o-right" style="margin-right: 5px;"></i>Hoàn tất</a>';
+                        }else if (data === 1) {
+                            return '<a style="color:green;">Hoàn tất - Đã thanh toán</a>';
+                        } else {
+                            return '<a style="color:red;">Đã hủy</a>';
+                        }
+                    },
+                    class: 'text-center'
+                },
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+
+        tblContent.on('click', '.view-doc',
+            function () {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                 ShowPopup($(this), "/danhsachphieuxuat/ExportPhieuXuat?id_bill=" + data.id, "1184px", "900px");
+            });
+        @*tblContent.on('click',
+            '.cancel-sale',
+            function() {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: "Xác nhận hủy đơn hàng này không ??",
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function (result) {
+                        if (result) {
+                            var dataJson = {
+                                id_bill: data.id
+                            }
+                           CallAjax("GET", '@Url.Action("Xoadonhang")', dataJson, ChangeStatusRoomCallBack);
+                        }
+                    }
+                });
+            });*@
+        @*tblContent.on('click',
+            '.complete-sell',
+            function() {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: "Xác nhận hoàn thành đơn hàng này không ??",
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function (result) {
+                        if (result) {
+                            var dataJson = {
+                                id_bill: data.id
+                            }
+                            CallAjax("GET", '@Url.Action("_Hoanthanhdonhang")', dataJson, ChangeStatusRoomCallBack);
+                        }
+                    }
+                });
+            });*@
+
+    }
+
+    function ChangeStatusRoomCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    $('#tbl-content').dataTable().api().ajax.url('/danhsachphieuxuat/_LoadListBill?date_sale=' + $('#txt-date-start').val() + "&status=2").load();
+                }
+            }
+        );
+    }
+</script>
+
+
+
+
+
+
+
+

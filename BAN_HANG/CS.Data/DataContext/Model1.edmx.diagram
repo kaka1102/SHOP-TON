@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e99d06381271450bb044cc02e6d6a0e2" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="DB_CSModel.Branch" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="DB_CSModel.img_product" Width="1.5" PointX="8.75" PointY="1" />
+        <EntityTypeShape EntityType="DB_CSModel.LevelRole" Width="1.5" PointX="8.75" PointY="9" />
+        <EntityTypeShape EntityType="DB_CSModel.Menu" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_CSModel.MenuPermission" Width="1.5" PointX="8.25" PointY="4.125" />
+        <EntityTypeShape EntityType="DB_CSModel.Role" Width="1.5" PointX="6" PointY="8.625" />
+        <EntityTypeShape EntityType="DB_CSModel.RoleUser" Width="1.5" PointX="5.25" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_CSModel.service_customer_bill" Width="1.5" PointX="0.75" PointY="11" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_attr_product" Width="1.5" PointX="10.75" PointY="6" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_attributes" Width="1.5" PointX="10.75" PointY="9" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_code_product" Width="1.5" PointX="4.75" PointY="12" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_log" Width="1.5" PointX="6.75" PointY="12" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_parameter" Width="1.5" PointX="12.75" PointY="1" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_product_detail" Width="1.5" PointX="12.75" PointY="9" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_price" Width="1.5" PointX="14.75" PointY="1" />
+        <EntityTypeShape EntityType="DB_CSModel.User" Width="1.5" PointX="3" PointY="1.5" />
+        <AssociationConnector Association="DB_CSModel.FK_User_BranchId" />
+        <AssociationConnector Association="DB_CSModel.FK_dbo_Menu_dbo_Menu_ParentId" />
+        <AssociationConnector Association="DB_CSModel.FK_dbo_MenuPermission_dbo_Menu_MenuId" />
+        <AssociationConnector Association="DB_CSModel.FK_dbo_MenuPermission_dbo_Role_RoleId" />
+        <AssociationConnector Association="DB_CSModel.FK_MenuPermission_User" />
+        <AssociationConnector Association="DB_CSModel.FK_dbo_RoleUser_dbo_Role_RoleId" />
+        <AssociationConnector Association="DB_CSModel.FK_RoleUser_User" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_tonkho" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_Nhap" Width="1.5" PointX="15.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_CSModel.service_customer_bill_detail" Width="1.5" PointX="9.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DB_CSModel.service_customer" Width="1.5" PointX="11.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_Unit" Width="1.5" PointX="15.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_nguonnhap" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_detail_category" Width="1.5" PointX="15.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_LoaiSP" Width="1.5" PointX="13.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DB_CSModel.sys_product" Width="1.5" PointX="15.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_gioithieu" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_CSModel.tbl_lienhe" Width="1.5" PointX="3.375" PointY="16.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

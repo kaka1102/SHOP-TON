@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = " - Quản lý đơn vị tính";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button id="btn-add" class="btn btn-success" type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Danh sách khách hàng
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="parent-content-container">
+                            @Html.Action("ListUnit")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        BindButtonAddClick();
+    });
+
+    function BindButtonAddClick() {
+        $("#btn-add").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "1000px",
+                innerHeight: "600px",
+                href: "/quanlydonvi/AddUnit"
+            });
+
+        });
+    }
+    function LoadListUser() {
+        LoadPartialView('@Url.Action("ListUnit")', $("#parent-content-container"));
+    }
+</script>
+

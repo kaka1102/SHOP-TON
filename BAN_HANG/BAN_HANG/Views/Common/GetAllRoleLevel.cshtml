@@ -1,0 +1,11 @@
+﻿
+<select id="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+    @if (Model != null)
+    {
+        <option value="0">--Lựa chọn--</option>
+        foreach (var item in Model)
+        {
+            <option value="@(item.Id)" @(ViewBag.idSelected == item.Id ? "selected='selected'" : "")>@(item.Description) (@(item.LevelName))</option>
+        }
+    }
+</select>

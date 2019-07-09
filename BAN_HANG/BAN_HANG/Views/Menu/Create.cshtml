@@ -1,0 +1,105 @@
+﻿
+
+@using MicrosoftHelper
+@using WebApplication
+@model  CS.Data.DataContext.Menu
+
+@{
+    ViewBag.Title = "Create";
+    if (Ajax.IsThisAjaxRequest())
+    {
+        Layout = null;
+    }
+}
+<script src="~/Content/ckEditor/ckeditor.js"></script>
+<link href="~/Content/ckEditor/samples/sample.css" rel="stylesheet" />
+
+@Ajax.StarkAjaxFormSubmiter("frmMenu", "tbMenu", true, "Action Successfully Executed")
+
+@{
+    if (!Ajax.IsThisAjaxRequest())
+    {
+        <section class="content-header">
+            <h1>
+                @ViewBag.Title
+                <small>@ViewBag.Title</small>
+            </h1>
+        </section>
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        $('select').searchableOptionList({
+            maxHeight: '250px'
+        });
+    });
+</script>
+<style>
+    .css-checkbox-menu {
+        width: 20px;
+        height: 20px;
+    }
+
+    .css-width-label {
+        width: 100%;
+    }
+</style>
+@using (Html.BeginForm("Create", "Menu", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmMenu" }))
+{
+    @Html.AntiForgeryToken()
+          <!-- Main content -->
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-solid box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Fill Menu Form</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+                    <div role="form">
+                        <div class="box-body">
+                            <div class="alert alert-success alert-dismissable" id="dvMsgMenu" style="display:none;">
+                                <i class="fa fa-apple"></i>
+                                <b> Create Successfully. </b>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MenuText, new { @class = "" })
+                                @Html.EditorFor(model => model.MenuText) @Html.ValidationMessageFor(model => model.MenuText)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MenuURL, new { @class = "" })
+                                @Html.EditorFor(model => model.MenuURL) @Html.ValidationMessageFor(model => model.MenuURL)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ParentId, new { @class = "" })
+                                @Html.DropDownList("ParentId", " -Select- ")
+                                @Html.ValidationMessageFor(model => model.ParentId)
+                                @Html.StarkDropDownAjaxLink("/Menu/Create", "AddMore", "")
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SortOrder, new { @class = "css-width-label" })
+                                @Html.EditorFor(model => model.SortOrder) @Html.ValidationMessageFor(model => model.SortOrder)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IsDisplayWebsite, new { @class = "css-width-label" })
+                                @Html.CheckBoxFor(model => model.IsDisplayWebsite, new { @checked = "checked", @class = "css-checkbox-menu" }) @Html.ValidationMessageFor(model => model.IsDisplayWebsite)
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            @Html.StarkInputButtion("Create New", "submit", "btn btn-primary", "")
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+
+

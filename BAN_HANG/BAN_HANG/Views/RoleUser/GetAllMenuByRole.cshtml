@@ -1,0 +1,145 @@
+﻿@using CS.Data.Model
+
+<style>
+    .text-alight-left {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .not-magrin-menu {
+        border-bottom: 1px solid;
+    }
+
+    .boder-item-read {
+        border-left: 1px solid;
+    }
+</style>
+
+@{
+    var model = (List<ListMenuByUserLoginViewModal>)Model;
+}
+
+<div class="row">
+    @if (model != null)
+    {
+        foreach (var item in model)
+        {
+
+            if (item.ParentId == 0)
+            {
+                <div class="col-xs-12">
+                    <div class="form-group not-magrin-menu">
+                        <div class="col-sm-1">
+                            <label>
+                                <input data-idmenu="@Html.Raw(item.MenuId)" class="@Html.Raw(item.trangthai == 1 ? "chon" : "khong")" type="checkbox" @Html.Raw(item.trangthai == 1 ? "checked disabled" : "") style="height: 20px; width: 20px;">
+                            </label>
+                        </div>
+                        <label class="col-sm-2 text-alight-left">@(item.MenuText.ToUpper())</label>
+                        <div class="col-sm-9">
+                            <div class="col-sm-2 boder-item-read">
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input class="@Html.Raw(item.IsRead == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(item.MenuId)" data-status="@Html.Raw(item.IsRead)" type="checkbox" @Html.Raw(item.IsRead == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-8 text-alight-left ">IsRead</label>
+                            </div>
+                            <div class="col-sm-2 boder-item-read">
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input class="@Html.Raw(item.IsCreate == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(item.MenuId)" data-status="@Html.Raw(item.IsCreate)" type="checkbox" @Html.Raw(item.IsCreate == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-8 text-alight-left">IsCreate</label>
+                            </div>
+                            <div class="col-sm-2 boder-item-read">
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input class="@Html.Raw(item.IsUpdate == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(item.MenuId)" data-status="@Html.Raw(item.IsUpdate)" type="checkbox" @Html.Raw(item.IsUpdate == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-8 text-alight-left">IsUpdate</label>
+                            </div>
+                            <div class="col-sm-2 boder-item-read">
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input class="@Html.Raw(item.IsDelete == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(item.MenuId)" data-status="@Html.Raw(item.IsDelete)" type="checkbox" @Html.Raw(item.IsDelete == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-8 text-alight-left">IsDelete</label>
+                            </div>
+                            <div class="col-sm-2 boder-item-read">
+                                <div class="col-sm-4">
+                                    <label>
+                                        <input class="@Html.Raw(item.IsExport == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(item.MenuId)" data-status="@Html.Raw(item.IsExport)" type="checkbox" @Html.Raw(item.IsExport == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-8 text-alight-left">IsExport</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                foreach (var children in model)
+                {
+                    if (children.ParentId == item.MenuId)
+                    {
+                        <div class="col-xs-12">
+                            <div class="form-group not-magrin-menu">
+                                <div class="col-sm-1">
+                                    <label>
+                                        <input data-idmenu="@Html.Raw(children.MenuId)" class="@Html.Raw(children.trangthai == 1 ? "chon" : "khong")" type="checkbox" @Html.Raw(children.trangthai == 1 ? "checked disabled" : "") style="height: 20px; width: 20px;">
+                                    </label>
+                                </div>
+                                <label class="col-sm-2 text-alight-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- @(children.MenuText)</label>
+                                <div class="col-sm-9">
+                                    <div class="col-sm-2 boder-item-read">
+                                        <div class="col-sm-4">
+                                            <label>
+                                                <input class="@Html.Raw(children.IsRead == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(children.MenuId)" data-status="@Html.Raw(children.IsRead)" type="checkbox" @Html.Raw(children.IsRead == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                            </label>
+                                        </div>
+                                        <label class="col-sm-8 text-alight-left">IsRead</label>
+                                    </div>
+                                    <div class="col-sm-2 boder-item-read">
+                                        <div class="col-sm-4">
+                                            <label>
+                                                <input class="@Html.Raw(children.IsCreate == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(children.MenuId)" data-status="@Html.Raw(children.IsCreate)" type="checkbox" @Html.Raw(children.IsCreate == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                            </label>
+                                        </div>
+                                        <label class="col-sm-8 text-alight-left">IsCreate</label>
+                                    </div>
+                                    <div class="col-sm-2 boder-item-read">
+                                        <div class="col-sm-4">
+                                            <label>
+                                                <input class="@Html.Raw(children.IsUpdate == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(children.MenuId)" data-status="@Html.Raw(children.IsUpdate)" type="checkbox" @Html.Raw(children.IsUpdate == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                            </label>
+                                        </div>
+                                        <label class="col-sm-8 text-alight-left">IsUpdate</label>
+                                    </div>
+                                    <div class="col-sm-2 boder-item-read">
+                                        <div class="col-sm-4">
+                                            <label>
+                                                <input class="@Html.Raw(children.IsDelete == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(children.MenuId)" data-status="@Html.Raw(children.IsDelete)" type="checkbox" @Html.Raw(children.IsDelete == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                            </label>
+                                        </div>
+                                        <label class="col-sm-8 text-alight-left">IsDelete</label>
+                                    </div>
+                                    <div class="col-sm-2 boder-item-read">
+                                        <div class="col-sm-4">
+                                            <label>
+                                                <input class="@Html.Raw(children.IsExport == true ? "option-chon" : "option-khong")" data-idmenu-option="@Html.Raw(children.MenuId)" data-status="@Html.Raw(children.IsExport)" type="checkbox" @Html.Raw(children.IsExport == true ? "checked " : "disabled") style="height: 20px; width: 20px;">
+                                            </label>
+                                        </div>
+                                        <label class="col-sm-8 text-alight-left">IsExport</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            }
+        }
+    }
+</div>

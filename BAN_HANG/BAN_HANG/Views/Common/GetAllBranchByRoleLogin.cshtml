@@ -1,0 +1,25 @@
+﻿<select id="@ViewBag.id" name="@ViewBag.id" name="@ViewBag.id" class="form-control" @(ViewBag.isDisable == true ? "Disabled='Disabled'" : "")>
+    @if (Model != null)
+    {
+        if (ViewBag.hasAll)
+        {
+            <option value="0" @(ViewBag.idSelected == 0 ? "selected='selected'" : "")>Tất cả</option>
+        }
+        foreach (var item in Model)
+        {
+            <option value="@(item.Id)" @(ViewBag.idSelected == item.Id ? "selected='selected'" : "")>@(item.Name)</option>
+        }
+
+    }
+    else
+    {
+
+        <option value="00" Disabled>Không có đại lý</option>
+    }
+</select>
+
+
+
+
+
+

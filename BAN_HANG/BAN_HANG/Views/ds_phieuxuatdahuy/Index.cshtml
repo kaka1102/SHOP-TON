@@ -1,0 +1,78 @@
+﻿@using CS.Common.Const
+
+@{
+    ViewBag.Title = " - Danh sách phiếu xuất đã hủy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @*<div class="ibox-content m-b-sm border-bottom">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label" for="order_id">Ngày xuất phiếu</label>
+                            <input id="txt-date-start" type="text" value="@(DateTime.Now.ToString("dd/MM/yyyy"))" readonly="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="parent-content-container">
+                                @Html.Action("LoadListBill")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            
+            
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ngày xuất phiếu</label>
+                            <div class="col-sm-4">
+                                <input id="txt-date-start" type="text" value="@(DateTime.Now.ToString("dd/MM/yyyy"))" readonly="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Danh sách phiếu xuất đã hủy
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="parent-content-container">
+                            @Html.Action("LoadListBill")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $("#txt-date-start").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "mm/dd/yy"
+        });
+    });
+    function LoadListBill() {
+        LoadPartialView('@Url.Action("LoadListBill")', $("#parent-content-container"));
+    }
+</script>
+
+
+

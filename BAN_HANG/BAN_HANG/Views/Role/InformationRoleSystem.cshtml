@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = " - Thông tin chi tiết về quyền " + ViewBag.name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .nav-tabs-custom > .nav-tabs > li.active {
+        border-top-color: #fff !important;
+    }
+</style>
+
+@*<section class="content-header">
+    <h1>
+        @ViewBag.Title @ViewBag.name
+    </h1>
+</section>*@
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="display: none" id="IdRole">@ViewBag.id</h1>
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#activity" data-toggle="tab" style="font-weight: bold;">Danh sách tài khoản sử dụng quyền</a></li>
+                                        <li><a href="#timeline" data-toggle="tab" style="font-weight: bold;">Danh sách menu trong quyền</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="active tab-pane" id="activity">
+                                            <div class="row">
+                                                <div class="col-sm-12" id="content-container">
+                                                    @Html.Action("ListAccountUsingRole", new { id = ViewBag.id })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="timeline">
+                                            <div class="row">
+                                                <div class="col-sm-12" id="content-container">
+                                                    @Html.Action("ListMenuInRole", new { id = ViewBag.id })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

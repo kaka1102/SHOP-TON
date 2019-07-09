@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = " - Thêm mới ảnh cho sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="content-container">
+                                <div>
+                                    <label id="lbl_error_up" style="color: red"></label>
+                                </div>
+                                <div class="ibox-content">
+                                    <form action="/ProductService/_SaveUploadedFile?id_product=@ViewBag.id" method="post" class="dropzone" id="my-awesome-dropzone"></form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

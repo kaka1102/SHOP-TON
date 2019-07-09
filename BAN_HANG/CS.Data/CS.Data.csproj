@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{774F2110-A1C5-4EC8-B6D6-444BADC27ACA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CS.Data</RootNamespace>
+    <AssemblyName>CS.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\BranchBusiness.cs" />
+    <Compile Include="Business\CommonBusiness.cs" />
+    <Compile Include="Business\ContactcustomerBusiness.cs" />
+    <Compile Include="Business\CustomerBusiness.cs" />
+    <Compile Include="Business\danhsachphieuxuatBusiness.cs" />
+    <Compile Include="Business\DSDaiLyBusiness.cs" />
+    <Compile Include="Business\gioithieuwebsiteBusiness.cs" />
+    <Compile Include="Business\LoginBusiness.cs" />
+    <Compile Include="Business\ManagerCategoryBusiness.cs" />
+    <Compile Include="Business\ManagerListUserBussiness.cs" />
+    <Compile Include="Business\ManagerUserTreeViewBusiness.cs" />
+    <Compile Include="Business\nhap_tonkhoBussiness.cs" />
+    <Compile Include="Business\ProductServiceBusiness.cs" />
+    <Compile Include="Business\quanlydonviBusiness.cs" />
+    <Compile Include="Business\quanlynguonnhapBusiness.cs" />
+    <Compile Include="Business\RoleBusiness.cs" />
+    <Compile Include="Business\RoleUserBusiness.cs" />
+    <Compile Include="Business\xuat_dailyBusiness.cs" />
+    <Compile Include="Connection\Connect.cs" />
+    <Compile Include="DataContext\Branch.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\img_product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\LevelRole.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Menu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\MenuPermission.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Role.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\RoleUser.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\service_customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\service_customer_bill.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\service_customer_bill_detail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_attributes.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_attr_product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_code_product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_log.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_nguonnhap.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_Nhap.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_parameter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_product_detail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sys_tonkho.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_detail_category.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_gioithieu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_lienhe.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_LoaiSP.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_price.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\tbl_Unit.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\User.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Add_Bill.cs" />
+    <Compile Include="Model\ChitietSP.cs" />
+    <Compile Include="Model\chitiettonkho.cs" />
+    <Compile Include="Model\Customer_Pagelist.cs" />
+    <Compile Include="Model\ds_sp_theo_center.cs" />
+    <Compile Include="Model\EditSelectMenu.cs" />
+    <Compile Include="Model\item_lienhe.cs" />
+    <Compile Include="Model\lichsu_nhap.cs" />
+    <Compile Include="Model\ListAccountUsingRoleById.cs" />
+    <Compile Include="Model\ListDetailProduct.cs" />
+    <Compile Include="Model\ListMenuByUserLoginViewModal.cs" />
+    <Compile Include="Model\ListRoleViewModel.cs" />
+    <Compile Include="Model\ListUserPageListViewModal.cs" />
+    <Compile Include="Model\ListUserUsingRole.cs" />
+    <Compile Include="Model\LstMenuViewModel.cs" />
+    <Compile Include="Model\paramter.cs" />
+    <Compile Include="Model\ReturnListBill.cs" />
+    <Compile Include="Model\ReturnListBranch.cs" />
+    <Compile Include="Model\ReturnListCategory.cs" />
+    <Compile Include="Model\ReturnListLienhe.cs" />
+    <Compile Include="Model\ReturnListUnit.cs" />
+    <Compile Include="Model\ReturnLstCategoryProduct.cs" />
+    <Compile Include="Model\ReturnLstNguonnhap.cs" />
+    <Compile Include="Model\ReturnPage.cs" />
+    <Compile Include="Model\RU_GetAllUserViewModel.cs" />
+    <Compile Include="Model\SessionUser.cs" />
+    <Compile Include="Model\Thongso_kt.cs" />
+    <Compile Include="Model\unitproduct.cs" />
+    <Compile Include="Model\UserTreeContainerByCenterViewModal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Untils\GetSessionBusiness.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="DataContext\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataContext\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Common\CS.Common.csproj">
+      <Project>{fa8910e3-259a-4eae-84d2-321439ff35e0}</Project>
+      <Name>CS.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.2.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataContext\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataContext\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

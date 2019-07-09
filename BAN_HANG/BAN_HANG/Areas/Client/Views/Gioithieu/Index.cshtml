@@ -1,0 +1,25 @@
+﻿@using CS.Data.DataContext
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Client/Views/Shared/_Layout.cshtml";
+
+    var data = (tbl_gioithieu)Model;
+
+}
+
+<div class="contact">
+    <div class="col-md-12 contact-top">
+        @if (data != null)
+        {
+            @Html.Raw(data.noidung)
+        }
+        else
+        {
+            <h3>Không có thông tin</h3>
+        }
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+

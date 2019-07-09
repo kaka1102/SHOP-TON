@@ -1,0 +1,352 @@
+﻿
+body {
+    position: relative;
+}
+
+@font-face {
+    font-family: 'myfont';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Noto Serif'), local('Noto-Serif'), url(/fonts/Noto-Serif.woff) format('woff');
+}
+
+@font-face {
+    font-family: MYRIADPRO;
+    src: url(/fonts/MYRIADPRO-REGULAR.OTF) format("opentype");
+}
+
+@font-face {
+    font-family: myriadpro-semibold;
+    font-weight: bold;
+    src: url(/fonts/MYRIADPRO-SEMIBOLD.OTF) format("opentype");
+}
+
+@font-face {
+    font-family: myriadpro-semiboldcond1;
+    font-weight: bold;
+    src: url(/fonts/MYRIADPRO-SEMIBOLDCOND_1.OTF) format("opentype");
+}
+@font-face {
+    font-family: myriadpro-light-semi;
+    font-weight: bold;
+    src: url(/fonts/MYRIADPRO-LIGHTSEMICN_0.OTF) format("opentype");
+}
+.sidebar-menu {
+    font-family: MYRIADPRO !important;
+}
+
+table tr {
+    background-color: rgb(234, 231, 208) !important;
+    font-weight: 200 !important;
+}
+
+    table tr:first-child {
+        font-weight: 500 !important;
+        background-color: #dfdbb9 !important;
+    }
+
+    table tr td {
+        background-color: rgb(234, 231, 208) !important;
+    }
+
+.back-loading {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background-color: darkgray;
+    opacity: 0.6;
+    z-index: 999;
+}
+
+.box1 {
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+
+
+.back-loading .img-content {
+    margin-top: 20%;
+    content: url("/Content/Images/Double Ring-1s-146px.gif");
+}
+
+
+.content-header h1 {
+    font-family: myriadpro-semibold !important;
+    text-transform: uppercase;
+}
+
+.box-title {
+    font-family: myriadpro-semiboldcond1;
+    text-transform: uppercase !important;
+}
+
+.icon-index {
+    margin-right: 10px;
+    width: 40px;
+}
+
+.icon-check-menu {
+    height: 20px;
+    width: 20px;
+}
+
+.childtable td {
+    background-color: #e7e3cb !important;
+}
+
+.childtable tr:first-child td {
+    background-color: #dedaba !important;
+    font-weight: bold;
+}
+
+.bonusitem {
+    color: red !important;
+    border: 1px solid red !important;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    border: 1px solid #d2d6de !important;
+    color: black !important;
+}
+
+.view-only {
+    background-color: #808080;
+}
+
+    .view-only:hover {
+        background-color: #666666;
+    }
+
+.footable-sort-indicator {
+    display: none !important;
+}
+
+td.details-control {
+    background: url('/Content/Images/details_open.png') no-repeat center center !important;
+    cursor: pointer;
+    background-color: rgb(234, 231, 208) !important;
+}
+
+tr.shown td.details-control {
+    background: url('/Content/Images/details_close.png') no-repeat center center !important;
+    cursor: pointer;
+}
+
+.ti-close {
+    cursor: pointer !important;
+}
+
+.ti-pencil {
+    cursor: pointer !important;
+}
+
+.hide-reason {
+    display: none;
+}
+
+.select-item {
+    cursor: pointer;
+}
+
+.top-frm {
+    width: 100%;
+    float: left;
+    font-weight: bold;
+    font-size: 13px;
+    /*padding-top: 5px;
+    padding-bottom: 5px;*/
+}
+
+.title-frm {
+    width: 100%;
+    float: left;
+    font-weight: bold;
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
+    font-size: 13px;
+}
+
+textarea.noscrollbars1 {
+    overflow: hidden;
+    width: 100%;
+    height: 100px;
+    border-left: 1px solid black;
+}
+
+textarea.noscrollbars {
+    overflow: hidden;
+    width: 100%;
+    height: 100px;
+}
+
+.icon-check-frm {
+    width: 20px;
+    height: 20px;
+    margin: 0px !important;
+}
+
+.div-parent {
+    width: 100%;
+    float: left;
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
+}
+
+textarea.noscrollbars-none-border {
+    overflow: hidden;
+    width: 100%;
+    height: 100px;
+}
+textarea.form-control {
+    border-radius: 0px;
+    height: 44px;
+    padding: 3px 6px;
+    resize: none;
+}
+textarea.noscrollbars-top {
+    overflow: hidden !important;
+    width: 100%;
+    height: 25px !important;
+}
+
+textarea.nomarl {
+    overflow: hidden !important;
+    width: 100%;
+    height: 100px !important;
+}
+.select-item { cursor: pointer; }
+
+.nav-tabs li {
+    font-family: myriadpro-light-semi;
+}
+.user-header {
+    font-family: myriadpro-light-semi;
+}
+.user-body {
+    font-family: myriadpro-light-semi !important;
+}
+.user-footer {
+    font-family: myfont !important;
+}
+.user-menu {
+    font-family: myfont !important;
+    font-weight: bold;
+}
+.button-buy {
+    font-family: my-font; color: #fff; width: 175px;
+}
+
+    .button-buy .content-1 {
+        vertical-align: middle !important;
+        margin-right: 5px !important;
+        
+    }
+    .button-buy .content-2 {
+        margin-right: 5px !important;
+        width: 80px;
+        display: inline-block;
+    }
+.button-buy .content-3 {
+vertical-align: middle !important;
+}
+/* Autocomplete
+----------------------------------*/
+.ui-autocomplete { position: absolute; cursor: default; }       
+.ui-autocomplete-loading { background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat; }
+
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+
+/* Menu
+----------------------------------*/
+.ui-menu {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    display: block;
+    width: 227px;
+    background-color: rgb(234, 231, 208) !important;
+}
+    .ui-menu li:hover {
+        background-color: #dfdbb9 !important;
+        border: none;
+        color: #4d4dff !important;
+    }
+.ui-menu .ui-menu {
+    margin-top: -3px;
+}
+    .ui-menu .ui-menu-item {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-family: myriadpro-light-semi;
+        color: blue;
+    }
+.ui-menu .ui-menu-item a {
+    text-decoration:none;
+    display:block;
+    padding:.2em .4em;
+    line-height:1.5;
+    zoom:1;
+}
+    .ui-menu .name-content {
+        display: inline-block;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        color: black;
+    }
+    .ui-menu .price-content {
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+        float: right;
+        font-family: myriadpro-semiboldcond1;
+        color: red !important;
+        font-size: 14px;
+        text-align: right;
+    }
+.ui-menu .ui-menu-item a.ui-state-hover,
+    .ui-menu .ui-menu-item a.ui-state-active {
+        margin: -1px;
+    }
+.ui-menu-item {
+    display: inline-block;
+}
+.div-option-369 {
+    width: 100%;
+    float: left;
+    height: 50px;
+    position: relative;
+    margin-top: 50px;
+}
+
+.header-right1 {
+    position: absolute;
+    float: right;
+    right: 40px;
+    width: 100px;
+}
+.header-right2 {
+    position: absolute;
+    float: right;
+    right: 160px;
+    width: 100px;
+}
+.header-right3 {
+    position: absolute;
+    float: right;
+    right: 280px;
+    width: 100px;
+}
+tr:hover td {
+    background-color: #e7e4ca !important;
+    /*color: black !important;*/
+}

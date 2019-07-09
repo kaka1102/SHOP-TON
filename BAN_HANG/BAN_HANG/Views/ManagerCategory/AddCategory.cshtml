@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mới loại sản phẩm";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Thông tin loại sản phẩm</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-12" id="frm-1">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Tên loại sản phẩm<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-fullname" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12" id="frm-7">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Mô tả</label>
+                                    <div class="col-sm-10">
+                                        <input id="txt-note" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Trạng thái</label>
+                                    <div class="col-sm-8">
+                                        <label>
+                                            <input type="checkbox" id="status" checked="checked" style="height: 20px; width: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sử dụng
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+
+                            <div class="col-xs-12" id="frm-9">
+                                <div class="col-xs-2" style="margin-left: 40%;">
+                                    <button id="btn-add" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $("#txt-birth").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "dd/mm/yy"
+        });
+        BindButtonSubmitClick();
+    });
+
+    function BindButtonSubmitClick() {
+        $("#btn-add").click(function () {
+            var fullName = $("#txt-fullname").val();
+            var note = $("#txt-note").val();
+            var status = $('#status').is(":checked");
+            var data = {
+                fullName: fullName,
+                note: note,
+                status: status
+            }
+              CallAjax("GET", '@Url.Action("_AddCategory")', data, EditCallBack);
+        });
+    }
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+            window.parent.LoadListUser();
+            $('#btn-search-code-user').css('display', 'block');
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+        window.parent.AppendToToastr("Thông báo", data.result.Message);
+    }
+</script>
+
+
+
+
+
+

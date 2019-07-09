@@ -1,0 +1,36 @@
+﻿@using BAN_HANG.Areas.Client.Models
+@using CS.Common.Untils
+@{
+    var data = (List<LstNewProduct>)Model;
+}
+
+
+<h2 class=" products-in" style="padding-bottom: 10px;padding-top: 30px">SẢN PHẨM LIÊN QUAN</h2>
+
+<div class="content-top-in">
+
+    @if (data.Count > 0)
+    {
+        foreach (var item in data)
+        {
+            <div class="col-md-4 top-single">
+                <div class="col-md">
+                    <a href="/Home/ChitietSP/@(item.id)"><img src="@(item.path_img)" alt="@(item.description_img)" class="img-responsive" /></a>
+                    <div class="top-content">
+                        <h5>@(item.name)</h5>
+                        <div class="white">
+                            <a href="#" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ĐẶT HÀNG</a>
+                            <p class="dollar"><span class="in-dollar">$</span><span>@(DisplayUntil.DisplayMoney(item.gia_xuat))</span></p>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h3>Không có sản phẩm liên quan</h3>
+    }
+    <div class="clearfix"></div>
+</div>

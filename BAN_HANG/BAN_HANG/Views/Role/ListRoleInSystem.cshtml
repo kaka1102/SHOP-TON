@@ -1,0 +1,128 @@
+﻿
+
+@using CS.Common.Const
+
+
+
+<table id="tbl-content" class="table table-bordered table-hover" style="width: 100% !important">
+    <thead>
+        <tr>
+            <th>Tên quyền</th>
+            <th>Trạng thái</th>
+            <th>Level</th>
+            <th>Tùy chọn</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadAllRole();
+    });
+
+    function LoadAllRole() {
+        var tblContent = $('#tbl-content').dataTable({
+            ajax: {
+                url: "/Role/_ListRoleInSystem",
+                type: 'POST'
+
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'RoleName',
+                    class: 'text-center'
+                },
+                {
+                    data: 'IsActive',
+                    mRender: function (data) {
+                        if (data == true) {
+                            data = "Đang sử dụng";
+                        } else {
+                            data = "<p style='color:red;font-weight: bold;'>Bị khóa</p>";
+                        }
+                        return data;
+                    },
+                    class: 'text-center'
+                },
+                {
+                    data: 'Description',
+                    class: 'text-center'
+                },
+                {
+                    data: 'Id',
+                    mRender: function (data) {
+                        //return '<button type="button" title="Chỉnh sửa thông tin" class="fa fa-edit icon-index">' +
+                        //       '<button type="button" title="Thông tin chi tiết về quyền" class="fa fa-info icon-index">';
+
+                        return '<button class="btn btn-success  dim  icon-index hint--top" aria-label="Chỉnh sửa thông tin" type="button"><i class="fa fa-edit"></i></button>' +
+                               '<button class="btn btn-warning dim  icon-index hint--top" aria-label="Thông tin chi tiết về quyền" type="button"><i class="fa fa-info"></i></button>';
+                    },
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+        tblContent.on('click',
+            '.btn-success', function () {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                if (data.Level == 12) {
+                    $(this).colorbox({
+                        iframe: true,
+                        innerWidth: "50%",
+                        innerHeight: "40%",
+                        href: "/Role/MessageModel"
+                    });
+                } else {
+                    $(this).colorbox({
+                        iframe: true,
+                        innerWidth: "50%",
+                        innerHeight: "40%",
+                        href: "/Role/EditRole?id=" + data.Id
+                    });
+                }
+            });
+        tblContent.on('click',
+            '.btn-warning', function () {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                var Id = data.Id;
+                window.location.href = "/Role/InformationRoleSystem?id=" + data.Id;
+
+            });
+    }
+
+
+</script>

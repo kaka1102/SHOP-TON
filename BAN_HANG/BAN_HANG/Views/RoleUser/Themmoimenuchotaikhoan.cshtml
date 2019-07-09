@@ -1,0 +1,32 @@
+﻿@using CS.Data.Model
+
+
+
+@{
+    var model = (List<ListMenuByUserLoginViewModal>)Model;
+}
+
+<select id="lst-menu-by-id" class="form-control">
+    @if (model.Count > 0)
+    {
+        foreach (var item in model)
+        {
+            <option value="@(item.MenuId)">@(item.MenuText)</option>
+        }
+    }
+    else
+    {
+        <option value="0">Không còn menu để thêm mới</option>
+    }
+</select>
+<script>
+    $(function() {
+        $('#lst-menu-by-id').change(function() {
+            $('#IsRead').prop('checked', true);
+            $('#IsCreate').prop('checked', false);
+            $('#IsUpdate').prop('checked', false);
+            $('#IsDelete').prop('checked', false);
+        });
+    });
+</script>
+

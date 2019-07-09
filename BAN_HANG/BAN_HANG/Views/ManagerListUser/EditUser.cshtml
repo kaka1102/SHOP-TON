@@ -1,0 +1,258 @@
+﻿@using CS.Data.DataContext
+
+@{
+    ViewBag.Title = " - Cập nhật thông tin tài khoản";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+<style>
+    #ui-datepicker-div {
+        font-size: 17px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Cập nhật thông tin tài khoản
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model == null)
+            {
+                <p>Không có dữ liệu</p>
+            }
+            else
+            {
+                var model = (User)Model;
+                <div class="box box-success">
+                    <div class="form-horizontal box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="color: red;">Đại lý <span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        @*@Html.Action("LoadBrandByRoleLogin", "Common", new { id = "cbx-branch", idSelected = model.BranchId })*@
+                                        
+                                        @Html.Action("GetAllBranchByRoleLogin", "Common", new { id = "cbx-branch", idselected = model.BranchId })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Họ và tên<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-fullname" class="form-control" value="@(model.FullName)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Mã nhân viên<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-code" class="form-control" value="@(model.UserCode)"  />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Số điện thoại</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" id="txt-phone" class="form-control" value="@(model.Phone)" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 190 || event.keyCode == 110 || event.keyCode == 109 || event.keyCode == 107 || event.keyCode == 40) ? false : true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-email" class="form-control" value="@(model.Email)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Ngày sinh</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-birth" readonly="" class="form-control" placeholder="dd/MM/yyyy" value="@(model.DateOfBirth == null ? "" : model.DateOfBirth.Value.ToString("dd/MM/yyyy"))" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="color: red;">Quyền tài khoản<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.Action("GetAllRoleByUserRole", "Common", new { id = "cbx-role", idSelected = ViewBag.roleid })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="color: red;"> Người quản lý <span style="color: red;"></span></label>
+                                    <div class="col-sm-10">
+                                        @Html.Action("GetListAccountParent", "Common", new { id = "cbx-parent", idacc = model.Id, idcenter = model.BranchId, idSelected = model.ParentId == null ? 0 : model.ParentId.Value })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Trạng thái<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10" id="dep-container">
+                                        @Html.Action("ListStatus", "Common", new { id = "cbx-status", idSelected = model.IsActive })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="color: blue;">Sử dụng tài khoản</label>
+                                    <div class="col-sm-10">
+                                        <select id="cbx-hasaccount" class="form-control" style="border: blue solid 1px; color: blue;">
+                                            <option value="true" @(model.isusingaccount == true ? "selected" : "")>Sử dụng</option>
+                                            <option value="false" @(model.isusingaccount != true ? "selected" : "")>Không dùng</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 has-account">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Tên tài khoản <span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="txt-username" class="form-control" value="@(model.UserName)" @(string.IsNullOrEmpty(model.UserName) == true ? "" : "disabled = 'disabled'") />
+                                    </div>
+                                </div>
+                            </div>
+                            @if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password))
+                            {
+                                <div class="col-xs-12 has-account">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Mật khẩu <span style="color: red;"> *</span></label>
+                                        <div class="col-sm-10">
+                                            <input id="txt-password" type="password" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 has-account">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Xác nhận mật khẩu<span style="color: red;"> *</span></label>
+                                        <div class="col-sm-10">
+                                            <input id="txt-confirm-password" type="password" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer" style="text-align: center;">
+                        <button id="btn-submit" type="button" class="btn btn-success" change-pass="false"><i class="fa fa-save" style="margin-right: 5px;"></i>Lưu thông tin</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+<script>
+    $(function() {
+        BindButtonSubmitClick();
+        $("#txt-birth").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "dd/mm/yy"
+        });
+        BindButtonChangePasswordClick();
+        BindButtonRoleChange();
+        LoadParentAccount();
+        AccountShow();
+        BindCbxUsingAccountChange();
+    });
+    function BindCbxUsingAccountChange() {
+        $("#cbx-hasaccount").change(function () {
+            AccountShow();
+        });
+    }
+    function AccountShow() {
+        var value = $("#cbx-hasaccount").find('option:selected').val();
+        if (value === "true") {
+            $(".has-account").css("display", "block");
+        } else {
+            $(".has-account").css("display", "none");
+        }
+    }
+    function BindButtonRoleChange() {
+        $("#cbx-role").change(function() {
+            LoadParentAccount();
+        });
+    }
+
+
+    function BindButtonChangePasswordClick() {
+        $("#btn-change-pass").click(function () {
+            var pass = $("#txt-password");
+            $("#btn-submit").attr("change-pass", true);
+            pass.removeAttr("disabled");
+            pass.val("");
+        });
+    }
+    function BindButtonSubmitClick() {
+        $("#btn-submit").click(function () {
+            var id = "@(ViewBag.id)";
+            var username = $("#txt-username").val();
+            var password = $("#txt-password").val();
+            var confirmPassword = $("#txt-confirm-password").val();
+            var status = $("#cbx-status").find('option:selected').val();
+            var fullname = $("#txt-fullname").val();
+            var email = $("#txt-email").val();
+            var phone = $("#txt-phone").val();
+            var branch = $("#cbx-branch").find('option:selected').val();
+            var code = $("#txt-code").val();
+            var birth = $("#txt-birth").val();
+            var parent = $("#cbx-parent").find('option:selected').val();
+            var roleid = $("#cbx-role").find('option:selected').val();
+            var isusingaccount = $("#cbx-hasaccount").find('option:selected').val()
+            var data = {
+                id: id,
+                password: password,
+                status: status,
+                fullname: fullname,
+                email: email,
+                branch: branch,
+                phone: phone,
+                code: code,
+                birth: birth,
+                parent: parent,
+                roleid: roleid,
+                isusingaccount: isusingaccount,
+                username: username,
+                confirmPassword: confirmPassword
+            }
+            CallAjax("GET", '@Url.Action("_EditUser")', data, EditCallBack);
+        });
+    }
+    function LoadParentAccount() {
+        var data = {
+            idcenter: $("#cbx-branch").find('option:selected').val(),
+            level: $("#cbx-role").find('option:selected').attr("level"),
+            id: "cbx-parent"
+        }
+        LoadPartialView("@Url.Action("GetListAccountParentByLevelAndCenter","Common")",
+            $("#cbx-parent-container"),
+            data);
+    }
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+            ReloadDatatableAjaxFromPopup("#tbl-content");
+          //  window.parent.$("#jstree-wrapper").jstree("refresh");
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+        window.parent.AppendToToastr("Thông báo", data.result.Message);
+    }
+</script>

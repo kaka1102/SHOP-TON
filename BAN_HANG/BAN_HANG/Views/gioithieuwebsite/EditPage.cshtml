@@ -1,0 +1,61 @@
+﻿@using CS.Data.DataContext
+
+@{
+    var data = (tbl_gioithieu)Model;
+    ViewBag.Title = " - " + data.tentrang;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+
+@if (data != null)
+{
+    <div class="ibox-content no-padding">
+        <div class="summernote">
+        </div>
+    </div>
+    <div class="col-xs-12" style="padding-top: 20px">
+        <p id="message-result" style="text-align: center;"> </p>
+    </div>
+    <div class="col-xs-12" style="padding-top: 20px">
+        <div class="col-xs-2 col-xs-offset-5">
+            <button id="btn-update" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Cập nhật</button>
+        </div>
+    </div>
+}
+else
+{
+    <h3>Không có thông tin</h3>
+}
+<script>
+    $(function () {
+        BindButtonSubmitClick();
+        $('.summernote').summernote('code','@Html.Raw(ViewBag.noidung)');
+    });
+
+    function BindButtonSubmitClick() {
+        $("#btn-update").click(function () {
+
+            var noidung = $('.summernote').summernote('code');
+            var fd = new FormData();
+
+            fd.append('id', @ViewBag.id);
+            fd.append('noidung', noidung);
+
+            CallAjax_FormData("@Url.Action("_EditPage")", fd, EditCallBack);
+        });
+    }
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+    }
+</script>
+
+
+
+

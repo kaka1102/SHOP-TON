@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Thêm mới thông tin nguồn nhập";
+    Layout = "~/Views/Shared/Popup_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Thông tin nguồn nhập</h2>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-horizontal box-body">
+                            <div class="col-xs-6" id="frm-1">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Tên nguồn nhập<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-fullname" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" id="frm-2">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Code<span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-code" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" id="frm-5">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Địa chỉ <span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-address" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" id="frm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Số điện thoại <span style="color: red;"> *</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="txt-phone" type="number" class="form-control" onkeydown="javascript: return (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 190 || event.keyCode == 110 || event.keyCode == 109 || event.keyCode == 107 || event.keyCode == 40) ? false : true">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-12" id="frm-7">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Mô tả</label>
+                                    <div class="col-sm-10">
+                                        <input id="txt-note" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12" id="frm-8">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Đại lý <span style="color: red;"> *</span></label>
+                                    <div class="col-sm-10">
+                                        @(Html.Action("GetAllCenter", "Common", new { id = "cbx-branch", idSelected = ViewBag.BranchId }))
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <p id="message-result" style="text-align: center;"> </p>
+                            </div>
+
+                            <div class="col-xs-12" id="frm-9">
+                                <div class="col-xs-2" style="margin-left: 40%;">
+                                    <button id="btn-add" type="button" class="btn btn-block btn-success"><i class="fa fa-save" style="margin-right: 5px;"></i>Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $("#txt-birth").datepicker({
+            changeYear: true,
+            yearRange: "1950:2050",
+            dateFormat: "dd/mm/yy",
+            altFormat: "dd/mm/yy"
+        });
+        BindButtonSubmitClick();
+    });
+
+    function FormatForm() {
+        $('#txt-fullname').val('');
+        $('#txt-code').val('');
+        $('#txt-address').val('');
+        $('#txt-phone').val('');
+        $('#txt-note').val('');
+        $('#cbx-branch').val(@ViewBag.BranchId);
+        $('#message-result').text('');
+    }
+    function HideForm() {
+        $('#frm-0').css('display', 'block');
+        $('#frm-1').css('display', 'none');
+        $('#frm-2').css('display', 'none');
+        $('#frm-3').css('display', 'none');
+        $('#frm-4').css('display', 'none');
+        $('#frm-5').css('display', 'none');
+        $('#frm-6').css('display', 'none');
+        $('#frm-7').css('display', 'none');
+        $('#frm-8').css('display', 'none');
+        $('#frm-9').css('display', 'none');
+        $('#frm-10').css('display', 'none');
+        $('#frm-11').css('display', 'none');
+    }
+    function ShowFormSearchSuccess() {
+        $('#message-result').text('');
+        $('#frm-1').css('display', 'block');
+        $('#frm-2').css('display', 'block');
+        $('#frm-3').css('display', 'block');
+        $('#frm-4').css('display', 'block');
+        $('#frm-5').css('display', 'block');
+        $('#frm-6').css('display', 'block');
+        $('#frm-7').css('display', 'block');
+        $('#frm-8').css('display', 'block');
+        $('#frm-9').css('display', 'block');
+        $('#frm-10').css('display', 'block');
+        $('#frm-11').css('display', 'block');
+    }
+    function ShowForm() {
+        $('#frm-0').css('display', 'none');
+        $('#frm-1').css('display', 'block');
+        $('#frm-2').css('display', 'block');
+        $('#frm-3').css('display', 'block');
+        $('#frm-4').css('display', 'block');
+        $('#frm-5').css('display', 'block');
+        $('#frm-6').css('display', 'block');
+        $('#frm-7').css('display', 'block');
+        $('#frm-8').css('display', 'block');
+        $('#frm-9').css('display', 'block');
+        $('#frm-10').css('display', 'block');
+        $('#frm-11').css('display', 'block');
+    }
+    
+    function BindButtonSubmitClick() {
+        $("#btn-add").click(function () {
+            var fullName = $("#txt-fullname").val();
+            var code = $("#txt-code").val();
+            var address = $("#txt-address").val();
+            var phone = $("#txt-phone").val();
+            var note = $("#txt-note").val();
+            var branchId = $("#cbx-branch").find('option:selected').val();
+            var data = {
+                fullName: fullName,
+                address: address,
+                phone: phone,
+                code: code,
+                note: note,
+                branchId: branchId
+            }
+              CallAjax("GET", '@Url.Action("_AddNguonnhap")', data, EditCallBack);
+        });
+    }
+    function EditCallBack(data) {
+        if (data.result.IsSuccess) {
+            $("#message-result").css("color", "green");
+            window.parent.LoadListUser();
+            $('#btn-search-code-user').css('display', 'block');
+        } else {
+            $("#message-result").css("color", "red");
+        }
+        $("#message-result").text(data.result.Message);
+        window.parent.AppendToToastr("Thông báo", data.result.Message);
+    }
+</script>
+
+
+
+
+

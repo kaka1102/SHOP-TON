@@ -1,0 +1,81 @@
+﻿
+@using BAN_HANG.Areas.Client.Models
+
+@{
+    var data = (List<ReturnDSLoaiSP>)Model;
+}
+<style>
+    .modal-content {
+        max-width: 100% !important;
+        width: 100%;
+    }
+</style>
+
+<h3 class="future" style="padding: 0px">DANH SÁCH SẢN PHẨM</h3>
+
+@if (data.Count > 0)
+{
+    int key = 0;
+    <div class="ths-top-navs">
+        <ul class="tab-navs">
+            @foreach (var item in data)
+            {
+                key += 1;
+                <li class="tab-navs-item @(key==1 ?"active" : "")">
+                    <a data-toggle="tab" id="nav-@(item.id)" href="#category-@(item.id)" aria-expanded="@(key==1 ?"true" : "false")">@(item.category_name)</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div class="ths-top-navs">
+        <h3>Không có dữ liệu</h3>
+    </div>
+}
+
+<div class="tab-content row">
+    @if (data.Count > 0)
+    {
+        int stt = 0;
+        foreach (var item in data)
+        {
+            stt += 1;
+            <ul class="tab-content row tab-pane fade  in @(stt==1 ?"active" : "")" id="category-@(item.id)">
+                @foreach (var itemChil in item.LstSP)
+                {
+                    <li class="tab-content-item col-sm-6">
+                        <a class="thumb" href="/Home/ChitietSP/@(itemChil.id)" style="background-image: url('@(itemChil.path_img)')">
+                            <h3 class="ths-title">@(itemChil.name)</h3>
+                            <img src="@(itemChil.path_img)" class="img-responsive" alt="@(itemChil.description_img)">
+                            <button class="see-more">Xem thêm</button>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+
+    }
+    else
+    {
+        <div class="ths-top-navs">
+            <h3>Không có dữ liệu</h3>
+        </div>
+    }
+</div>
+
+
+<script type="text/javascript">
+    $('.modal').each(function (e) {
+        var _this = $(this);
+        _this.on('hidden.bs.modal', function () {
+            var _modal = _this.find(".modal-body");
+            var hide = 'pauseVideo';
+            var _this_a = _this.find(".modal-body");
+            var _iframe = _this_a.closest(".modal").find('iframe');
+            _iframe.attr('src', _iframe.attr('src'));
+        });
+    });
+
+</script>

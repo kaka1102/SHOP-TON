@@ -1,0 +1,151 @@
+﻿@using CS.Common.Const
+
+<div class="box box-solid box-primary" style="padding-top: 10px">
+    <div class="box-body">
+        <div class="margin">
+            <div class="btn-group">
+                <button id="btn-add" class="btn btn-success " type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<table id="tbl-content12" class="table table-bordered table-hover" style="width: 100% !important">
+    <thead>
+        <tr>
+            <th>Tên quyền</th>
+            <th>Cấp quyền</th>
+            <th>Tài khoản</th>
+            <th>Level Web</th>
+            <th>Tùy chọn</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+
+    $(function() {
+        BindButtonAddClick();
+    });
+    function BindButtonAddClick() {
+        $("#btn-add").click(function() {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "1000px",
+                innerHeight: "600px",
+                href: "/Role/AddAccountUsingRole?Id=@ViewBag.id"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        LoadAllAccountUsingRole();
+    });
+
+    function LoadAllAccountUsingRole() {
+        var tblContent = $('#tbl-content12').dataTable({
+            ajax: {
+                url: "/Role/_ListAccountUsingRole?Id="+ @ViewBag.id,
+                type: 'POST'
+
+            },
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            columns: [
+                {
+                    data: 'RoleName',
+                    class: 'text-center'
+                },
+                {
+                    data: 'Description',
+                    class: 'text-center'
+                },
+                {
+                    data: 'UserName',
+                    class: 'text-center'
+                },
+                {
+                    data: 'LevelName',
+                    class: 'text-center'
+                },
+                {
+                    data: 'Id',
+                    mRender: function (data) {
+                        //return '<button type="button" title="Edit" class="fa  fa-trash-o icon-index">';
+                        return '<button class="btn btn-success  dim  icon-index hint--right" aria-label="Chỉnh sửa thông tin" type="button"><i class="fa fa-edit"></i></button>';
+                    },
+                    class: 'text-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 'no-sort'
+                }
+            ],
+            "order": [[1, 'asc']],
+            responsive: true,
+            bLengthChange: false,
+            initComplete: function (settings, json) {
+
+            },
+            fnCreatedRow: function (row, data, index) {
+                $(row).css("background-color", "#eae7d0");
+            },
+            language: {
+                lengthMenu: "Độ dài",
+                zeroRecords: "không có dữ liệu",
+                info: "Tổng cộng _TOTAL_ bản ghi",
+                emptyTable: "Không có bản ghi",
+                infoEmpty: "Không có bản ghi",
+                loadingRecords: "Đang tải",
+                search: "Tìm kiếm",
+                searchPlaceholder: "Tìm kiếm",
+                paginate: {
+                    first: "Trang đầu",
+                    last: "Trang cuối",
+                    next: "Tiếp",
+                    previous: "Quay lại"
+                }
+            }
+        });
+        tblContent.on('click',
+            '.btn-success',
+            function() {
+                var closestRow = $(this).closest('tr');
+                var data = tblContent.api().row(closestRow).data();
+                var id = data.Id;
+                BootstrapDialog.confirm({
+                    title: 'CHÚ Ý',
+                    message: '@SystemMessageConst.systemmessage.ConfirmAfterDelete',
+                    type: BootstrapDialog.TYPE_WARNING,
+                    closable: true,
+                    draggable: true,
+                    btnCancelLabel: 'CANCEL',
+                    btnOKLabel: 'OK',
+                    btnOKClass: 'btn-warning',
+                    callback: function (result) {
+                        if (result) {
+                            var dataJson = {
+                                id: id
+                            }
+                            CallAjax("GET", '@Url.Action("DeleteAccountUsingRole")', dataJson, DeleteCallBack);
+                        }
+                    }
+                });
+            });
+    }
+    function DeleteCallBack(data) {
+        BootstrapDialog.alert(
+            {
+                title: 'THÔNG BÁO',
+                type: BootstrapDialog.TYPE_SUCCESS,
+                message: data.result.Message,
+                callback: function () {
+                    var idMenu = $("#cbx-branch").find('option:selected').val();
+                    $('#tbl-content12').dataTable().api().ajax.url("/Role/_ListAccountUsingRole?Id="+ @ViewBag.id).load();
+                }
+            }
+        );
+    }
+</script>
+

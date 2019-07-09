@@ -1,0 +1,63 @@
+﻿
+
+@{
+    ViewBag.Title = " - Danh sách quyền hạn nhân viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<section class="content-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</section>*@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid box-primary">
+
+                <div class="box-body">
+                    <div class="margin">
+                        <div class="btn-group">
+                            <button id="btn-add" class="btn btn-success " type="button"><i class="fa fa-pencil"></i>&nbsp;&nbsp;<span class="bold">Thêm mới</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-primary">
+                <div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="content-container">
+                                @Html.Action("ListUserInSystem")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function() {
+        BindButtonAddClick();
+    });
+    function BindButtonAddClick() {
+        $("#btn-add").click(function () {
+            $(this).colorbox({
+                iframe: true,
+                innerWidth: "90%",
+                innerHeight: "100%",
+                href: "/RoleUser/AddAccountIntoRole?Id=@ViewBag.id"
+            });
+        });
+    }
+    function LoadListUser() {
+        LoadPartialView('@Url.Action("ListUserInSystem")', $("#content-container"));
+    }
+
+</script>
+
+

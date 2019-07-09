@@ -1,0 +1,112 @@
+﻿
+@using WebApplication
+@model IEnumerable<CS.Data.DataContext.Menu>
+
+@{
+    ViewBag.Title = "- Quản lý menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dataTables_length {
+        display: none;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding: 10px 18px;
+        border-bottom: 0px solid #111 !important;
+    }
+
+    table.dataTable.no-footer {
+        border-bottom: 0px solid #111 !important;
+    }
+</style>
+
+
+<div class="col-xs-12">
+    <div class="btn-group">
+        @Ajax.ModalDialogActionLink("Thêm mới", "Create", "Create ", "btn btn-primary")
+    </div>
+    <div class="table-responsive">
+        <span id="found" class="label label-info"></span>
+        <table id="tbMenu" class="display nowrap">
+            <thead>
+                <tr>
+                    <th>Id </th>
+                    <th>Tên menu </th>
+                    <th>URL</th>
+                    <th>Menu Cha</th>
+                    <th>Vị trí</th>
+                    <th>Trạng thái</th>
+                    <th>Tùy chọn</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div id="summary">
+            <div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            var oTableMenu = "";
+            var ControlerNameMenu = "@Url.Content("~/Menu")";
+            // debugger;
+            oTableMenu = $("#tbMenu").dataTable({
+                "bRetrieve": true,
+                "bProcessing": true,
+                "dom": 'lBfrtip',
+                "sAjaxSource": "@Url.Content("~/Menu/GetGrid")",
+
+                "pageLength": 10,
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "aoColumns": [
+                    {}, {}, {}, {}, {}, {}, {
+                        "mRender": function(oObj, type, row) {
+
+                            var buttons = "<a style=\"color : #3E3E42 \" href=" +
+                                ControlerNameMenu +
+                                "/MultiViewIndex/" +
+                                row[0] +
+                                "><button class=\"btn btn-success  dim  icon-index hint--top\" type=\"button\" aria-label=\"Chỉnh sửa thông tin\"><i class=\"fa fa-edit\"></i></button></a>";
+
+                            buttons += "<a style=\"color : #3E3E42 \" href=" +
+                                ControlerNameMenu +
+                                "/Details/" +
+                                row[0] +
+                                " data-ajax-update=\"#SkDetails\" data-ajax-success=\"openModalDialog('SkDetails', 'Details')\" data-ajax-mode=\"replace\" data-ajax-method=\"GET\" data-ajax-failure=\"clearModalDialog('SkDetails');alert('Ajax call failed')\" data-ajax-begin=\"prepareModalDialog('SkDetails')\" data-ajax=\"true\"><button type=\"button\" aria-label=\"Xem chi tiết\" class=\" btn btn-warning  dim   icon-index hint--top\"><i class=\"fa fa-info\"></i></button></a>";
+
+                            buttons += "<a style=\"color : #3E3E42 \" href=" +
+                                ControlerNameMenu +
+                                "/Delete/" +
+                                row[0] +
+                                " data-ajax-update=\"#SkDelete\" data-ajax-success=\"openModalDialog('SkDelete', 'Delete')\" data-ajax-mode=\"replace\" data-ajax-method=\"GET\" data-ajax-failure=\"clearModalDialog('SkDelete');alert('Ajax call failed')\" data-ajax-begin=\"prepareModalDialog('SkDelete')\" data-ajax=\"true\">     <button type=\"button\" aria-label=\"Xóa menu\" class=\"btn btn-danger dim icon-index hint--top\"><i class=\"fa fa-trash-o\"></i></button> </a>";
+
+                            return buttons;
+                        }
+
+                    },
+                ]
+
+            });
+            var table = $('#tbMenu').DataTable();
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+            var column = table.column($(this).attr('data-column'));
+            column.visible(!column.visible());
+        });
+        });
+</script>
+
+

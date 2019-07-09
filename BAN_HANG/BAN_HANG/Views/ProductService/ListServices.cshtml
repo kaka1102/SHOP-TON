@@ -1,0 +1,75 @@
+﻿
+@using CS.Data.Model
+@{
+    var count = 0;
+    var model = (List<ListDetailProduct>)Model;
+}
+<table id="tbl-list-service" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>STT</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn vị tính</th>
+            <th>Trạng thái</th>
+            <th>Tùy chọn</th>
+        </tr>
+
+    </thead>
+    @foreach (var item in model)
+    {
+        <tr>
+            <td class="details-control" data-id="@(item.id)"></td>
+            <td count="@(count++)">@(count)</td>
+            <td>@(item.code)</td>
+            <td>@(item.product_name)</td>
+            <td>@(item.unit_name)</td>
+            <td>@Html.Raw(item.isactive == true ? "<span style='color:green;'>Đang sử dụng</span>" : "<span style='color:red;'>ẩn</span>") </td>
+            <td>
+                <button onclick="BindButtonEditClick(this)" data-id="@(item.id)" class="btn btn-primary dim  icon-index hint--right" aria-label="Sửa thông tin" type="button">
+                    <i class="fa fa-edit"></i>
+                </button>
+
+                @*<button type="button" title="Edit" class="fa fa-edit icon-index" onclick="BindButtonEditClick(this)" data-id="@(item.id)">
+
+                </button>*@
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    $(function() {
+        var table = $('#tbl-list-service').dataTable();
+        var _table = $("#tbl-list-service").DataTable();
+
+        table.on('click',
+            '.details-control',
+            function() {
+                var tr = $(this).closest('tr');
+                var row = _table.row(tr);
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "/ProductService/ShowDetailProduct",
+                    data: {
+                        id: id
+                    },
+                    type: "GET",
+                    dataType: "html",
+                    success: function(data) {
+                        if (row.child.isShown()) {
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            row.child(data).show();
+                            tr.addClass('shown');
+                        }
+                        return data;
+                    },
+                    beforeSend: function() {
+                    }
+                });
+            });
+    });
+</script>
+
